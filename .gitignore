@@ -1,0 +1,11 @@
+.cache
+eaf
+elpa
+site-lisp
+snippets
+transient
+url
+var
+.emacs.desktop
+.lsp-session-v1
+projectile-bookmarks.eld
