@@ -4,8 +4,10 @@ elpa
 site-lisp
 snippets
 transient
-url
-var
+url/
+var/
+emacs.pdmp
 .emacs.desktop
 .lsp-session-v1
 projectile-bookmarks.eld
+network-security.data

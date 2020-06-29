@@ -42,10 +42,7 @@
     (setq ivy-display-style 'fancy)
     (define-key read-expression-map (kbd "C-r") 'counsel-expression-history)))
 
-(use-package
-  counsel
-  :hook
-  ('counsel-mode . 'dashboard-mode)
+(use-package counsel
   :ensure t
   :bind
   (("C-x C-r" . 'counsel-recentf)

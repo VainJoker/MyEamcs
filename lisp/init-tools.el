@@ -39,6 +39,18 @@
   (setq eaf-proxy-port "1080")
   )
 
+(use-package deft
+  :ensure t
+  :defer 2
+  :config
+  (setq deft-extensions '("txt" "md" "tex" "org"))
+  (setq deft-directory "~/Notes")
+  (setq deft-text-mode 'org-mode)
+  (setq deft-use-filename-as-title t)
+  (setq deft-incremental-search nil)
+  (setq deft-recursive t)
+  )
+
 (use-package neotree
   :ensure t
   :after evil
@@ -149,8 +161,8 @@
   ) 
 
 (use-package pdf-tools
-  :ensure t
   :defer 3
+  :ensure t
   :hook
   ('doc-view-mode 'pdf-view-mode-hook))
 
@@ -178,11 +190,32 @@
 	google-translate-default-target-language "zh-CN"
 	google-translate-default-source-language "en"))
 
-(use-package benchmark-init
-  :ensure t
-  :config
-  ;; To disable collection of benchmark data after init is done.
-  (add-hook 'after-init-hook 'benchmark-init/deactivate))
+;; (use-package benchmark-init
+;;   :ensure t
+;;   :config
+;;   ;; To disable collection of benchmark data after init is done.
+;;   (add-hook 'after-init-hook 'benchmark-init/deactivate))
+
+;; (use-package wanderlust
+;;   :ensure t
+;;   :defer 5
+;;   :init
+;;   (if (boundp 'mail-user-agent)
+;;       (setq mail-user-agent 'wl-user-agent))
+;;   (if (fboundp 'define-mail-user-agent)
+;;       (define-mail-user-agent
+;; 	'wl-user-agent
+;; 	'wl-user-agent-compose
+;; 	'wl-draft-send
+;; 	'wl-draft-kill
+;; 	'mail-send-hook)) 
+;;   :config
+;;   (setq elmo-imap4-default-server "imap.163.com"
+;;       elmo-imap4-default-user "vainjoker@163.com"
+;;       elmo-imap4-default-authenticate-type 'clear
+;;       elmo-imap4-default-port '993
+;;       elmo-imap4-default-stream-type 'ssl)
+;;   )
 
 (use-package undo-tree
   :ensure t

@@ -45,6 +45,21 @@
   )
 
 
+(use-package yasnippet
+  :defer 2
+  :ensure t
+  :config
+  (yas-reload-all)
+  (add-hook 'prog-mode-hook #'yas-minor-mode)
+  )
+
+(use-package yasnippet-snippets
+  :defer 5
+  :ensure t
+  )
+
+
+
 ;; (use-package yasnippet
 ;;   :defer 2
 ;;   :diminish yas-minor-mode
@@ -101,10 +116,6 @@
 ;;           (cdr (assoc result rmap))))
 ;;     nil))
 
-;; (use-package yasnippet-snippets
-;;   :defer 5
-;;   :ensure t
-;;   )
 
 ;; (use-package python
 ;;   :ensure t

@@ -1,5 +1,6 @@
 (add-to-list 'exec-path "~/go/bin")
 (use-package go-mode
+  :ensure t
   :mode (("\\.go'\\'" . go-mode))
   :hook ((before-save . gofmt-before-save))
   )
@@ -27,8 +28,8 @@
 
 					; i want use ob-go , above code just compile the code
 (use-package ob-go
-  :defer 5
   :ensure t
+  :defer 5
   )
 
 (provide 'init-go)

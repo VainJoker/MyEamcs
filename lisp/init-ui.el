@@ -1,7 +1,7 @@
 ;;设置主题
 ;; (load-theme 'doom-city-lights t)
 ;; (load-theme 'doom-one t)
-(load-theme 'doom-wilmersdorf t)
+; (load-theme 'doom-wilmersdorf t)
 ;; (load-theme 'doom-darcula t)
 ;; 设置透明
 ;; (set-frame-parameter nil 'alpha '(85 .100))
@@ -9,6 +9,11 @@
 (set-face-attribute 'default nil :font "Iosevka 14")
 ;; 设置中文字体
 ;; (set-fontset-font t 'han "Sarasa Mono SC 13")
+
+(use-package doom-themes 
+ :ensure t
+ :init (load-theme 'doom-wilmersdorf t)
+ )
 
 (use-package all-the-icons
   :ensure t)

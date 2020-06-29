@@ -7,7 +7,7 @@
 ;; (package-initialize) doens’t require each package, we need to load
 ;; those we want manually
 (dolist (package '(
-                   use-package 
+                   use-package
                    doom-themes
                    doom-modeline
                    which-key
@@ -15,7 +15,7 @@
                    swiper
                    counsel
                    avy
-                   org
+                   ;; org
                    general
                    posframe
                    undo-tree
@@ -31,6 +31,7 @@
                    all-the-icons
                    projectile
                    ivy-posframe
+                   perspective
                    ; google-translate
                    ; telega
                    ; youdao-dictionary
@@ -38,13 +39,12 @@
                    ; projectile
                    ; recentf
                    ;; dashboard
-                   benchmark-init
-                   ; ox
-                   ; org-pomodoro
-                   company
-                   company-lsp
-                   company-tabnine
-                   perspective
+                   ;; benchmark-init
+                   ;; ox
+                   ;; org-pomodoro
+                   ;; company
+                   ;; company-lsp
+                   ;; company-tabnine
                    ;; yasnippet
                    ;; yasnippet-snippets
                    ; lsp-mode

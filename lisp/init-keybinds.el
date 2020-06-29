@@ -42,7 +42,7 @@
     "mc" 'calendar
     "mt" 'vterm-other-window
     "me" 'neotree-toggle
-    "mc" 'flycheck-mode
+    "mf" 'flycheck-mode
     "cc" 'evilnc-comment-or-uncomment-lines
     "cl" 'evilnc-quick-comment-or-uncomment-to-the-line
     "ci" 'evilnc-copy-and-comment-lines
@@ -57,6 +57,7 @@
     ;; "gl" 'magit-file-log
     ;; "gr" 'magit-grep
     "A" 'org-agenda
+    "D" 'deft
     "G" 'magit-status
     "P" 'projectile-command-map
     "X" 'perspective-map
