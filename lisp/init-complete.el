@@ -39,13 +39,35 @@
          (go-mode . lsp)
          (auctex . lsp)
          (c-mode . lsp)
-	 (js2-mode .lsp)
-	 (web-mode . lsp)
+     (js2-mode .lsp)
+     (web-mode . lsp)
          ;; if you want which-key integration
          (lsp-mode . lsp-enable-which-key-integration))
   ; :commands lsp
   ; :hook ('prog-mode . 'lsp-mode)
   )
+
+
+;; (use-package nox 
+;;   :defer 2
+;;   :load-path "~/.emacs.d/site-lisp/nox"
+;;   :config 
+;;   (dolist (hook (list
+;; 		 'js-mode-hook
+;; 		 'rust-mode-hook
+;; 		 'python-mode-hook
+;; 		 'ruby-mode-hook
+;; 		 'java-mode-hook
+;; 		 'sh-mode-hook
+;; 		 'php-mode-hook
+;; 		 'c-mode-common-hook
+;; 		 'go-mode-hook
+;; 		 'c-mode-hook
+;; 		 'c++-mode-hook
+;; 		 'haskell-mode-hook
+;; 		 ))
+;;     (add-hook hook '(lambda () (nox-ensure))))
+;;   )
 
 
 (provide 'init-complete)

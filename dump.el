@@ -15,6 +15,7 @@
                    swiper
                    counsel
                    avy
+		   ;; wucuo
                    ;; org
                    general
                    posframe
@@ -31,13 +32,14 @@
                    all-the-icons
                    projectile
                    ivy-posframe
-                   perspective
-                   ; google-translate
-                   ; telega
-                   ; youdao-dictionary
-                   ; bongo
-                   ; projectile
-                   ; recentf
+		   eyebrowse
+                   ;; perspective
+                   ;; google-translate
+                   ;; telega
+                   ;; youdao-dictionary
+                   ;; bongo
+                   ;; projectile
+                   ;; recentf
                    ;; dashboard
                    ;; benchmark-init
                    ;; ox

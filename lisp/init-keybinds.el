@@ -60,7 +60,7 @@
     "D" 'deft
     "G" 'magit-status
     "P" 'projectile-command-map
-    "X" 'perspective-map
+    "X" 'eyebrowse-command-map
     )
 
  (general-define-key

@@ -171,17 +171,13 @@
   (setq org-pomodoro-overtime-sound-p nil)
   (setq org-pomodoro-short-break-sound-p nil)
   (setq org-pomodoro-start-sound-p nil)
+  (setq org-pomodoro-long-break-length 10)
   (add-hook 'org-pomodoro-finished-hook
 	    (lambda ()
 	      (call-process-shell-command "notify-send -u critical 您要休息一下了!" )))
   )
 
 
-					; (after! org-mode
-					;         (add-hook 'org-mode-hook 'turn-on-org-cdlatex)
-					;         )
-					; (after! latex-mode
-					;         (add-hook 'LaTeX-mode-hook 'turn-on-cdlatex))
 (use-package ox-pandoc
   :defer 2
   :ensure t
