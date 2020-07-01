@@ -10,6 +10,7 @@
 	company-dabbrev-downcase nil
 	company-show-numbers t
 	)
+  (setq lsp-keymap-prefix "C-,")
   :bind (:map company-active-map
               ("M-n" . nil)
               ("M-p" . nil)
@@ -36,15 +37,17 @@
   :defer 2
   :ensure t
   :hook (;; replace XXX-mode with concrete major-mode(e. g. python-mode)
-         (go-mode . lsp)
-         (auctex . lsp)
-         (c-mode . lsp)
-     (js2-mode .lsp)
-     (web-mode . lsp)
-         ;; if you want which-key integration
-         (lsp-mode . lsp-enable-which-key-integration))
-  ; :commands lsp
-  ; :hook ('prog-mode . 'lsp-mode)
+	 (auctex . lsp)
+	 (go-mode . lsp)
+	 (c-mode . lsp)
+	 (lisp-mode .lsp)
+	 (emacs-lisp-mode .lsp)
+	 (js2-mode .lsp)
+	 (web-mode . lsp)
+	 ;; if you want which-key integration
+	 (lsp-mode . lsp-enable-which-key-integration))
+					; :commands lsp
+					; :hook ('prog-mode . 'lsp-mode)
   )
 
 

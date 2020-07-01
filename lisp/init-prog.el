@@ -46,11 +46,16 @@
 
 
 (use-package yasnippet
-  :defer 2
+  :defer 5
   :ensure t
   :config
-  (yas-reload-all)
-  (add-hook 'prog-mode-hook #'yas-minor-mode)
+  ;; (yas-reload-all)
+  (yas-global-mode)
+  ;; (add-hook 'prog-mode-hook #'yas-minor-mode)
+  ;; (add-hook 'org-mode-hook #'yas-minor-mode)
+  (setq yas-snippet-dirs
+	'("~/.emacs.d/snippets"                 ;; personal snippets
+	  ))
   )
 
 (use-package yasnippet-snippets

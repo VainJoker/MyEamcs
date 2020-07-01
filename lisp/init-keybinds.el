@@ -59,6 +59,7 @@
     "A" 'org-agenda
     "D" 'deft
     "G" 'magit-status
+    "L" 'lsp-keymap-prefix
     "P" 'projectile-command-map
     "X" 'eyebrowse-command-map
     )

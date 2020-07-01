@@ -1,0 +1,7 @@
+# -*- mode: snippet -*-
+# name: go
+# key: go_
+# --
+#+begin_src go :imports "fmt"
+$0
+#+end_src
