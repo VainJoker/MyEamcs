@@ -10,13 +10,20 @@
                    use-package
                    doom-themes
                    doom-modeline
+		   ;; fancy-battery
+		   ;; nyan-mode
+                   ;; spaceline
+		   ;; spaceline-all-the-icons
                    which-key
-                   ace-window
-                   swiper
+
+                   ;; benchmark-init
                    counsel
+                   swiper
+		   amx
+		   flx
                    avy
-		   ;; wucuo
-                   ;; org
+		   ivy-posframe
+		   ivy-rich
                    general
                    posframe
                    undo-tree
@@ -25,14 +32,19 @@
                    rainbow-mode
                    rainbow-delimiters
                    smartparens
-                   ; pdf-tools
-                   ; windmove
-                   ; go-mode
                    neotree
                    all-the-icons
                    projectile
                    ivy-posframe
 		   eyebrowse
+                   yasnippet
+                   dashboard
+		   ;; counsel-projectile
+		   ;; wucuo
+                   ;; org
+                   ; pdf-tools
+                   ; windmove
+                   ; go-mode
                    ;; perspective
                    ;; google-translate
                    ;; telega
@@ -40,14 +52,11 @@
                    ;; bongo
                    ;; projectile
                    ;; recentf
-                   ;; dashboard
-                   ;; benchmark-init
                    ;; ox
                    ;; org-pomodoro
                    ;; company
                    ;; company-lsp
                    ;; company-tabnine
-                   ;; yasnippet
                    ;; yasnippet-snippets
                    ; lsp-mode
                    ; lsp-ui

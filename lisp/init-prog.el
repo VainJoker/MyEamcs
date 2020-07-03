@@ -28,35 +28,22 @@
     :hook (flycheck-mode . flycheck-popup-tip-mode))
   )
 
-(use-package lsp-ui
-  :defer 2
-  :ensure t
-  ;; :hook
-  ;; ((lsp . lsp-ui-sideline-mode-hook)
-   ;; (lsp . lsp-ui-doc-mode-hook)
-   ;; (lsp . lsp-ui-imenu-mode-hook)
-   ;; (lsp . lsp-ui-peek-mode-hook)
-   ;; )
-  :config
-  (setq lsp-ui-doc-mode 1)
-  :custom
-  (lsp-ui-doc-delay 1)
-  ;; (lsp-ui-doc-mode 0)
-  )
 
 
 (use-package yasnippet
   :defer 5
+  :after company
   :ensure t
   :config
-  ;; (yas-reload-all)
-  (yas-global-mode)
-  ;; (add-hook 'prog-mode-hook #'yas-minor-mode)
-  ;; (add-hook 'org-mode-hook #'yas-minor-mode)
+  (yas-reload-all)
+  (add-hook 'prog-mode-hook #'yas-minor-mode)
+  (add-hook 'text-mode-hook #'yas-minor-mode)
   (setq yas-snippet-dirs
 	'("~/.emacs.d/snippets"                 ;; personal snippets
 	  ))
   )
+
+
 
 (use-package yasnippet-snippets
   :defer 5

@@ -1,8 +1,3 @@
-;;设置主题
-;; (load-theme 'doom-city-lights t)
-;; (load-theme 'doom-one t)
-; (load-theme 'doom-wilmersdorf t)
-;; (load-theme 'doom-darcula t)
 ;; 设置透明
 ;; (set-frame-parameter nil 'alpha '(85 .100))
 ;; 设置英文字体
@@ -10,24 +5,60 @@
 ;; 设置中文字体
 ;; (set-fontset-font t 'han "Sarasa Mono SC 13")
 
-(use-package doom-themes 
- :ensure t
- :init (load-theme 'doom-wilmersdorf t)
- )
+;; (use-package doom-themes 
+;;   :ensure t
+;;   :init
+;;   ;; (load-theme 'doom-wilmersdorf t)
+;;   (load-theme 'doom-gruvbox t)
+;;   )
+
+(setq color-themes (custom-available-themes))
+(defun random-color-theme ()
+  (interactive)
+  (random t)
+  (load-theme
+   (nth (random (length color-themes)) color-themes)
+   t))
+(random-color-theme)
+(run-with-timer 1 (* 120 60) 'random-color-theme)
+
 
 (use-package all-the-icons
-  :ensure t)
+  :ensure t
+  )
 
 (use-package doom-modeline
   :ensure t
   :init (doom-modeline-mode 1)
   :config
-  (setq doom-modeline-height 15)
+  (use-package nyan-mode
+    :ensure t
+    :config
+    (nyan-mode 1)
+    (setq nyan-animate-nyancat t)
+    (setq nyan-bar-length 110)
+    (setq nyan-wavy-trail nil)
+    (setq mode-line-format
+	  (list
+	   '(:eval (list (nyan-create)))
+	   ))
+    )
+  (setq doom-modeline--battery-status t)
+  (setq doom-modeline-height 40)
+  (setq doom-modeline-icon (display-graphic-p))
+  (setq doom-modeline-major-mode-icon t)
+  (setq doom-modeline-major-mode-color-icon t)
+  (setq doom-modeline-buffer-state-icon t)
+  (setq doom-modeline-buffer-modification-icon t)
+  (setq doom-modeline-bar-width 3)
+  (setq doom-modeline-modal-icon nil)
+  (setq doom-modeline--battery-status t)
   )
 
 (use-package posframe
   :defer 1
-  :ensure t)
+  :ensure t
+  )
 
 (use-package rainbow-mode
   :ensure t
@@ -36,7 +67,7 @@
     (defun @-enable-rainbow ()
       (rainbow-mode t))
     (add-hook 'prog-mode-hook '@-enable-rainbow)
-))
+    ))
 
 (use-package rainbow-delimiters
   :ensure t
@@ -47,29 +78,39 @@
     (add-hook 'prog-mode-hook '@-enable-rainbow-delimiters))
   )
 
+(use-package dashboard 
+  :ensure t 
+  :config (dashboard-setup-startup-hook) 
+  (dashboard-modify-heading-icons '((recents . "file-text") 
+                                    (bookmarks . "book")))
+  ;; 设置标题
+  (setq dashboard-banner-logo-title
+        "Hello Vain Joker!")
+  ;; 设置banner
+  (setq dashboard-startup-banner "~/.emacs.d/banner/a.png") 
+  (setq dashboard-center-content t) 
+  (setq dashboard-set-heading-icons t) 
+  (setq dashboard-set-file-icons t) 
+  (setq dashboard-set-navigator t)
+  (setq dashboard-items '(
+              (recents  . 5)
+              (projects . 5)
+              ))
+  )
 
-;; (use-package dashboard
+;; (use-package circadian
 ;;   :ensure t
-;;   :config (dashboard-setup-startup-hook)
-;;   (dashboard-modify-heading-icons '((recents . "file-text")
-;;                     (bookmarks . "book")))
-;;   ;; 设置标题
-;;   (setq dashboard-banner-logo-title "Vain Joker")
-;;   ;; 设置banner
-;;   (setq dashboard-startup-banner "/home/vainjoker/.emacs.d/var/banner/a.png")
-;;   (setq dashboard-items '(
-;;               ; (recents  . 0)
-;;               (projects . 0)
-;;               (agenda . 0)
-;;               (bookmarks . 0)
-;;               ))
-;;   (setq dashboard-center-content t)
-;;   (setq dashboard-set-heading-icons t)
-;;   (setq dashboard-set-file-icons t)
-;;   (setq dashboard-set-navigator t)
+;;   :defer 5
+;;   :config
+;;   ;; 经纬度，可以在https://www.latlong.net/获取，默认是广州的
+;;   (setq calendar-latitude 31.530280
+;; 	calendar-longitude 120.288879
+;; 	;; sunrise 白天用的主题 sunset 晚上用的主题
+;; 	circadian-themes '((:sunrise . doom-solarized-light)
+;; 			   (:sunset . doom-one))
+;; 	)
+;;   (circadian-setup)
 ;;   )
-
-
 
 ;; 为上层提供 init-ui 模块
 (provide 'init-ui)

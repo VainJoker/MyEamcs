@@ -20,6 +20,7 @@
   (which-key-mode))
 
 (use-package ace-window
+  :defer 2
   :ensure t
   :init
   (progn
@@ -86,7 +87,7 @@
 
 
 (use-package helpful
- :defer 1
+ :defer 2
  :config
  (global-set-key (kbd "C-h f") #'helpful-callable)
  (global-set-key (kbd "C-h v") #'helpful-variable)

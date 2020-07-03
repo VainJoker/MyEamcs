@@ -21,6 +21,19 @@
     :keymaps 'normal
     ;; bind "SPC a"
     "TAB" 'hs-toggle-hiding
+    "."  'compile
+    "ca" 'counsel-ag
+    "cf" 'counsel-fzf
+    "cc" 'evilnc-comment-or-uncomment-lines
+    "cl" 'evilnc-quick-comment-or-uncomment-to-the-line
+    "ci" 'evilnc-copy-and-comment-lines
+    "cp" 'evilnc-comment-or-uncomment-paragraphs
+    "cr" 'comment-or-uncomment-region
+    "cv" 'evilnc-toggle-invert-comment-line-by-line
+    "dd" 'dap-debug
+    "da"  'dap-breakpoint-add
+    "dx"  'dap-breakpoint-delete
+    "dc"  'dap-breakpoint-delete-all
     "oa" 'org-agenda
     "oc" 'org-capture
     "oo" 'VainJoker/open-gtd-file
@@ -41,14 +54,9 @@
     "wv" 'evil-window-vsplit
     "mc" 'calendar
     "mt" 'vterm-other-window
+    "mz" 'load-theme
     "me" 'neotree-toggle
     "mf" 'flycheck-mode
-    "cc" 'evilnc-comment-or-uncomment-lines
-    "cl" 'evilnc-quick-comment-or-uncomment-to-the-line
-    "ci" 'evilnc-copy-and-comment-lines
-    "cp" 'evilnc-comment-or-uncomment-paragraphs
-    "cr" 'comment-or-uncomment-region
-    "cv" 'evilnc-toggle-invert-comment-line-by-line
     "ql" 'desktop-read
     "tt" 'youdao-dictionary-search-at-point-posframe
     "ti" 'youdao-dictionary-search-from-input
@@ -59,9 +67,7 @@
     "A" 'org-agenda
     "D" 'deft
     "G" 'magit-status
-    "L" 'lsp-keymap-prefix
     "P" 'projectile-command-map
-    "X" 'eyebrowse-command-map
     )
 
  (general-define-key

@@ -33,7 +33,16 @@
 ;;   (add-hook 'prog-mode-hook #'wucuo-start)
 ;;   (add-hook 'text-mode-hook #'wucuo-start)
 ;;   )
-  
+(use-package ag
+  :ensure t
+  :defer 3
+  :custom
+  (ag-highligh-search t)
+  (ag-reuse-buffers t)
+  (ag-reuse-window t)
+  :bind
+  ("M-s a" . ag-project)
+  ) 
 
 (use-package eaf
   :defer 2
@@ -194,17 +203,16 @@
 ;;         (switch-to-buffer buffer)))
    
 
-(use-package pdf-tools
-  :defer 3
-  :ensure t
-  :hook
-  ('doc-view-mode 'pdf-view-mode-hook))
+;; (use-package pdf-tools
+;;   :defer 3
+;;   :ensure t
+;;   :hook
+;;   ('doc-view-mode 'pdf-view-mode-hook))
 
 (use-package windmove
   :defer 3
   :ensure t
-  :init (windmove-default-keybindings)
-  :config)
+  )
   
 
 

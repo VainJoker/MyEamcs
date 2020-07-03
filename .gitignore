@@ -10,3 +10,5 @@ emacs.pdmp
 .lsp-session-v1
 projectile-bookmarks.eld
 network-security.data
+.extension
+.dap-breakpoints
