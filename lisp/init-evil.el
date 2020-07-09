@@ -1,6 +1,6 @@
 (use-package evil
-  :defer 0.5
   :ensure t
+  :defer 0.5
   :config 
   (evil-mode t)
   )

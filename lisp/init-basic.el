@@ -1,3 +1,5 @@
+(defvar vainjoker-data-directory
+  (expand-file-name "var/" user-emacs-directory))
 (setq split-width-threshold 0)
 (setq split-height-threshold nil)
 ;; 设置最近打开文件缓存的路径
@@ -10,8 +12,14 @@
 (setq amx-save-file "~/.emacs.d/var/amx-items")
 ;; 设置eshell历史记录
 (setq eshell-history-file-name "~/.emacs.d/var/eshell/history")
+(setq projectile-known-projects-file
+      (expand-file-name "projectile-bookmarks.eld" vainjoker-data-directory)
+ ;     (expand-file-name ".dap-breakpoints" vainjoker-data-directory)
+      ;(expand-file-name ".lsp-session-v1" vainjoker-data-directory)
+      )
 ;; 高亮括号
 (show-paren-mode 1)
+
 (use-package which-key
   :ensure t
   :custom

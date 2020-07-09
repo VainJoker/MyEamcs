@@ -1,3 +1,4 @@
+(add-to-list 'default-frame-alist '(fullscreen . maximized))
 (setq gc-cons-threshold-original gc-cons-threshold)
 (setq gc-cons-threshold (* 1024 1024 200))
 (setq file-name-handler-alist-original file-name-handler-alist)

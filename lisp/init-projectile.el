@@ -4,11 +4,12 @@
 
 (use-package projectile
   :ensure t
-  :defer 1
+  :defer 2
   :config
   ;; (define-key projectile-mode-map (kbd "s-p") 'projectile-command-map)
   ;; (define-key projectile-mode-map (kbd "C-c p") 'projectile-command-map)
-  (projectile-mode +1))
+  (projectile-mode 1)
+  )
 ; (when (maybe-require-package 'projectile)
 ;   (add-hook 'after-init-hook 'projectile-mode)
 ;

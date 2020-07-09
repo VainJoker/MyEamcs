@@ -1,6 +1,6 @@
 (use-package lsp-mode
-  :defer 2
   :ensure t
+  :defer 2
   :hook (;; replace XXX-mode with concrete major-mode(e. g. python-mode)
 	 (auctex . lsp)
 	 (go-mode . lsp)
@@ -17,6 +17,7 @@
   (setq lsp-keymap-prefix "C-,")
   (use-package lsp-ui
     :ensure t
+    :defer 2
     ;; :hook
     ;; ((lsp . lsp-ui-sideline-mode-hook)
     ;; (lsp . lsp-ui-doc-mode-hook)
@@ -33,7 +34,7 @@
 
 (use-package dap-mode
   :ensure t
-  :defer 4
+  :defer 2
   :config
   (setq dap-auto-configure-features '(sessions locals controls tooltip))
   (require 'dap-go)

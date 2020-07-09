@@ -68,8 +68,8 @@
       (setq end (save-excursion (org-end-of-subtree t t))))
     (org-end-of-subtree)))
 
-(setq calendar-latitude 31.5) ;;lat, flat
-(setq calendar-longitude 120.2962) ;;long是经度
+(setq calendar-latitude 31.57) ;;lat, flat
+(setq calendar-longitude 120.29) ;;long是经度
 (setq org-agenda-time-grid (quote ((daily today require-timed)
                                    (300
                                     600
@@ -144,11 +144,11 @@
 
 (use-package org-roam
   :defer 2
-  ;; :ensure t
+  :ensure t
   :after org
   :custom
   ;; (org-roam-mode 1)
-  (org-roam-directory "~/org-roam")
+  (org-roam-directory "~/org/org-roam")
   :bind (:map org-roam-mode-map
 	      (("C-c n l" . org-roam)
 	       ("C-c n f" . org-roam-find-file)
@@ -156,6 +156,7 @@
 	      ("C-c n i" . org-roam-insert)))
 
 (use-package org2ctex
+  :ensure t
   :defer 5
   :config
   (org2ctex-toggle 1)
@@ -179,14 +180,14 @@
 
 
 (use-package ox-pandoc
-  :defer 2
   :ensure t
+  :defer 2
   )
 
 (use-package cal-china-x
+  :ensure t
   :after calendar
   :defer 2
-  :ensure t
   )
 
 (setq my-holidays

@@ -9,14 +9,11 @@
 (dolist (package '(
                    use-package
                    doom-themes
+                   kaolin-themes
                    doom-modeline
-		   ;; fancy-battery
-		   ;; nyan-mode
-                   ;; spaceline
-		   ;; spaceline-all-the-icons
+		   nyan-mode
                    which-key
-
-                   ;; benchmark-init
+                  benchmark-init
                    counsel
                    swiper
 		   amx
@@ -32,12 +29,13 @@
                    rainbow-mode
                    rainbow-delimiters
                    smartparens
-                   neotree
+                   ;; neotree
                    all-the-icons
                    projectile
                    ivy-posframe
-		   eyebrowse
+		   ;; eyebrowse
                    yasnippet
+                   ;; recentf
                    dashboard
 		   ;; counsel-projectile
 		   ;; wucuo
@@ -51,7 +49,6 @@
                    ;; youdao-dictionary
                    ;; bongo
                    ;; projectile
-                   ;; recentf
                    ;; ox
                    ;; org-pomodoro
                    ;; company
@@ -63,7 +60,5 @@
                    ; flycheck
                    ))
   (require package))
-
-
 ;; dump image
 (dump-emacs-portable "/home/vainjoker/.emacs.d/emacs.pdmp")

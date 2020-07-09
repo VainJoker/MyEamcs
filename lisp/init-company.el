@@ -28,11 +28,13 @@
     :config
     (add-to-list 'company-backends #'company-tabnine))
   (use-package company-posframe
+   :ensure t
     :defer 3
     :after company
     :hook (company-mode . company-posframe-mode)
     )
   (use-package company-box
+    :ensure t
     :defer 2
     :after company
     :diminish
@@ -92,6 +94,10 @@
       (append (if (consp backend) backend (list backend))
 	      '(:with company-yasnippet))))
   (setq company-backends (mapcar #'company-mode/backend-with-yas company-backends))
+  (use-package company-graphviz-dot
+  ;; :ensure t
+  :defer 3
+  :after graphviz-dot-mode)
   )
 
 
