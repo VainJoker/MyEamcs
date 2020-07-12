@@ -4,7 +4,6 @@
 (setq package-archives '(("gnu"   . "http://mirrors.tuna.tsinghua.edu.cn/elpa/gnu/")
                          ("melpa" . "http://mirrors.tuna.tsinghua.edu.cn/elpa/melpa/")))
 
-
 (defvar vainjoker-dumped nil
   "non-nil when a dump file is loaded (because dump.el sets this variable).")
 
@@ -64,6 +63,7 @@
 (require 'init-ivy)
 (require 'init-treemacs)
 (require 'init-eaf)
+(require 'init-java)
 
 
 
@@ -104,7 +104,9 @@
  '(lsp-ui-doc-delay 3 t)
  '(org-roam-directory "~/org-roam")
  '(package-selected-packages
-   '(kaolin-themes exwm dashboard circadian fancy-battery nyan-mode spaceline-all-the-icons spaceline dap-go dap-mode ag company-posframe company-box company-go ubuntu-theme tramp-theme dracula-theme darcula-theme parinfer eyebrowse deft yasnippet-snippets yasnippet go-mode doom-themes use-package rainbow-mode rainbow-delimiters posframe doom-modeline))
+   '(multiple-cursors multi-cursor kaolin-themes exwm dashboard circadian fancy-battery nyan-mode spaceline-all-the-icons spaceline dap-go dap-mode ag company-posframe company-box company-go ubuntu-theme tramp-theme dracula-theme darcula-theme parinfer eyebrowse deft yasnippet-snippets yasnippet go-mode doom-themes use-package rainbow-mode rainbow-delimiters posframe doom-modeline))
+ '(pos-tip-background-color "#303035")
+ '(pos-tip-foreground-color "#d4d4d6")
  '(send-mail-function 'mailclient-send-it)
  '(swiper-action-recenter t)
  '(which-key-popup-type 'side-window))
@@ -114,7 +116,4 @@
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
  '(aw-leading-char-face ((t (:inherit ace-jump-face-foreground :height 3.0 :foreground "red"))))
- '(flycheck-posframe-border-face ((t (:inherit default))))
- '(ivy-posframe ((t (:background "#627d87"))))
- '(ivy-posframe-border ((t (:background "#6272a4"))))
- '(ivy-posframe-cursor ((t (:background "#61bfff")))))
+ '(flycheck-posframe-border-face ((t (:inherit default)))))

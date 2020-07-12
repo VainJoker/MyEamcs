@@ -68,9 +68,4 @@
 (global-set-key (kbd "S-<return>") 'comment-indent-new-line)
 ;; 让光标无法离开视线
 (setq mouse-yank-at-point nil)
-; ;; 让'_'被视为单词的一部分
-; (add-hook 'after-change-major-mode-hook (lambda ()
-;                                           (modify-syntax-entry ?_ "w")))
-; ;; "-" 同上)
-; (add-hook 'after-change-major-mode-hook (lambda ()
-;                                           (modify-syntax-entry ?- "w")))
+

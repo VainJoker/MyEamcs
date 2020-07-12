@@ -5,17 +5,18 @@
 ;; 设置中文字体
 ;; (set-fontset-font t 'han "Sarasa Mono SC 13")
 
-;; (use-package doom-themes
-;;   :ensure t
-;;   :init
-;;   (load-theme 'doom-wilmersdorf t)
-;;   ;; (load-theme 'doom-gruvbox t)
-;;   ;; (doom-themes-treemacs-config)
-;;   )
+(use-package doom-themes
+  :ensure t
+  :init
+  ;; (load-theme 'doom-wilmersdorf t)
+  ;; (load-theme 'doom-gruvbox t)
+  ;; (doom-themes-treemacs-config)
+  )
 (use-package kaolin-themes
   :config
-  (load-theme 'kaolin-bubblegum t)
   (kaolin-treemacs-theme)
+  (treemacs-icons-dired-mode)
+  (load-theme 'kaolin-temple t)
   )
 
 ;; (setq color-themes (custom-available-themes))

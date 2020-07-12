@@ -93,10 +93,10 @@
   :ensure t
   :config
   (ivy-posframe-mode 1)
-  :custom-face
-  (ivy-posframe ((t (:background "#627d87"))))
-  (ivy-posframe-border ((t (:background "#6272a4"))))
-  (ivy-posframe-cursor ((t (:background "#61bfff"))))
+  ;; :custom-face
+  ;; (ivy-posframe ((t (:background "#627d87"))))
+  ;; (ivy-posframe-border ((t (:background "#6272a4"))))
+  ;; (ivy-posframe-cursor ((t (:background "#61bfff"))))
   :custom (ivy-posframe-parameters '((left-fringe . 8)
 				     (right-fringe . 8)))
   (ivy-posframe-width 130)

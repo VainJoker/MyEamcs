@@ -80,8 +80,6 @@
 (use-package treemacs-icons-dired
   :after treemacs dired
   :ensure t
-  :config
-  (treemacs-icons-dired-mode)
   ;; (treemacs-icons-dired-mode)
   ;; (doom-themes-treemacs-config)
   )

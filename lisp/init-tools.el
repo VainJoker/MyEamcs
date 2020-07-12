@@ -8,6 +8,9 @@
   :config
   (global-nlinum-relative-mode)
   )
+(use-package multiple-cursors
+  :ensure t 
+  )
 (use-package eyebrowse
   :ensure t
   :defer 3

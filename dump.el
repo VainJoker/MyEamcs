@@ -13,7 +13,7 @@
                    doom-modeline
 		   nyan-mode
                    which-key
-                  benchmark-init
+                   benchmark-init
                    counsel
                    swiper
 		   amx
