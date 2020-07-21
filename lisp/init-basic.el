@@ -12,7 +12,10 @@
 (setq eshell-history-file-name "~/.emacs.d/var/eshell/history")
 ;; 高亮括号
 (show-paren-mode 1)
-
+;; 自动折行
+(toggle-truncate-lines t)
+;; 窗口重绘
+(setq auto-window-vscroll nil)
 (use-package which-key
   :ensure t
   :custom

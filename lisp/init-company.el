@@ -27,6 +27,10 @@
     :after 'company-mode 'company-tabnine-mode
     :config
     (add-to-list 'company-backends #'company-tabnine))
+  (use-package company-ctags
+    :ensure t
+    :after company
+    )
   (use-package company-posframe
    :ensure t
     :defer 3
@@ -97,7 +101,8 @@
   (use-package company-graphviz-dot
   ;; :ensure t
   :defer 3
-  :after graphviz-dot-mode)
+  :after graphviz-dot-mode
+  )
   )
 
 

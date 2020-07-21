@@ -3,6 +3,7 @@ eaf
 elpa
 site-lisp
 transient
+require
 url/
 var/
 emacs.pdmp
@@ -12,3 +13,4 @@ projectile-bookmarks.eld
 network-security.data
 .extension
 .dap-breakpoints
+

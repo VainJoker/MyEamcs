@@ -31,9 +31,14 @@
    "cr" 'comment-or-uncomment-region
    "cv" 'evilnc-toggle-invert-comment-line-by-line
    "dd" 'dap-debug
-   "da"  'dap-breakpoint-add
-   "dx"  'dap-breakpoint-delete
-   "dc"  'dap-breakpoint-delete-all
+   "da" 'dap-breakpoint-add
+   "dx" 'dap-breakpoint-delete
+   "dc" 'dap-breakpoint-delete-all
+   "ee" 'eaf-open
+   "eb" 'eaf-open-browser
+   "eh" 'eaf-open-browser-with-history
+   "em" 'eaf-open-mindmap
+   "et" 'eaf-open-terminal
    "oa" 'org-agenda
    "oc" 'org-capture
    "oo" 'VainJoker/open-gtd-file

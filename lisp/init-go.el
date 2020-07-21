@@ -4,6 +4,12 @@
   :mode (("\\.go'\\'" . go-mode))
   :hook ((before-save . gofmt-before-save))
   )
+;; 自动插入
+(defun go-auto-insert ()
+  (interactive)
+  (insert "package main \n func")
+  )
+
 (defvar golang-goto-stack '())
 (defun golang-jump-to-definition ()
   (interactive)
@@ -24,6 +30,8 @@
 			   (local-set-key (kbd "C-c C-g") 'go-goto-imports)))
 (add-hook 'go-mode-hook '(lambda ()
 			   (local-set-key (kbd "C-c C-f") 'gofmt)))
+(add-hook 'go-mode-hook '(lambda()
+			   (local-set-key (kbd "C-c C-i") 'go-auto-insert)))
 (add-hook 'before-save-hook 'gofmt-before-save)
 
 					; i want use ob-go , above code just compile the code

@@ -8,12 +8,12 @@
 ;; those we want manually
 (dolist (package '(
                    use-package
-                   doom-themes
+                   ;; doom-themes
                    kaolin-themes
                    doom-modeline
 		   nyan-mode
                    which-key
-                   benchmark-init
+                   ;; benchmark-init
                    counsel
                    swiper
 		   amx
@@ -27,15 +27,15 @@
                    nlinum
                    nlinum-relative
                    rainbow-mode
-                   rainbow-delimiters
+                   ;; rainbow-delimiters
                    smartparens
                    ;; neotree
                    all-the-icons
-                   projectile
+                   ;; projectile
                    ivy-posframe
 		   ;; eyebrowse
                    yasnippet
-                   ;; recentf
+                   recentf
                    dashboard
 		   ;; counsel-projectile
 		   ;; wucuo

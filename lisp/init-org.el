@@ -138,6 +138,9 @@
   :hook
   (org-mode-hook . org-superstar-mode-hook)
   :config
+  (setq org-superstar-headline-bullets-list
+	'("☯" "❀" "✿" "▷" "✚" "◉" )
+	)
   (setq org-superstar-remove-leading-stars t)
   (add-hook 'org-mode-hook (lambda () (org-superstar-mode 1)))
   )
@@ -184,6 +187,14 @@
   :defer 2
   )
 
+;; (use-package valign
+;;   :ensure t
+;;   :defer 2
+;;   :config
+;;   (add-hook 'org-mode-hook #'valign-mode)
+;;   )
+
+
 (use-package cal-china-x
   :ensure t
   :after calendar
@@ -209,15 +220,7 @@
 (setq calendar-mark-holidays-flag t)
 (setq calendar-holidays my-holidays)  ;只显示我定制的节假日
 
-(setq org-superstar-headline-bullets-list
-  '("☯" "❀" "✿" "▷" "✚" "◉" )
-  ;;   "✿") ;; "◉" "🞛" "○" "▷"
-  )
-  ;; '(;; Original ones nicked from org-bullets
-  ;;   "◉"
-  ;;   "○"
-  ;;   "✸"
-  ;;   "✿") ;; "◉" "🞛" "○" "▷"
+;; "☰" "☷" "☵" "☲"  "☳" "☴"  "☶"  "☱"
 ;; Do not dim blocked tasks
 (setq org-agenda-dim-blocked-tasks nil)
 

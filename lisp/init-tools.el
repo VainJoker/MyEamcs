@@ -1,15 +1,30 @@
-(use-package nlinum
-  :ensure t
-  :config
-  (global-nlinum-mode)
-  )
+;; (use-package nlinum
+;;   :ensure t
+;;   :config
+;;   (add-hook 'prog-mode-hook 'nlinum-mode-hook)
+;;   )
 (use-package nlinum-relative
   :ensure t
   :config
-  (global-nlinum-relative-mode)
+  (nlinum-relative-setup-evil)                    ;; setup for evil
+  (add-hook 'prog-mode-hook 'nlinum-relative-mode)
+  (setq nlinum-relative-redisplay-delay 0.25)      ;; delay
+  (setq nlinum-relative-current-symbol "▷")      ;; or "" for display current line number
+  (setq nlinum-relative-offset 0)                 ;; 1 if you want 0, 2, 3...
   )
+
+(use-package indent-guide
+  :after prog-mode
+  :ensure t
+  :hook (prog-mode . indent-guide-mode)
+  :config
+  (setq indent-guide-delay 0.1)
+  (setq indent-guide-recursive t)
+  )
+
 (use-package multiple-cursors
   :ensure t 
+  :defer 4
   )
 (use-package eyebrowse
   :ensure t
@@ -31,28 +46,16 @@
   :bind
   ("M-s a" . ag-project)
   ) 
-(use-package deft
-  :ensure t
-  :defer 2
-  :config
-  (setq deft-extensions '("txt" "md" "tex" "org"))
-  (setq deft-directory "~/Notes")
-  (setq deft-text-mode 'org-mode)
-  (setq deft-use-filename-as-title t)
-  (setq deft-incremental-search nil)
-  (setq deft-recursive t))
 (use-package smartparens
   :ensure smartparens
   :config
   (progn
     (show-smartparens-global-mode t))
   (add-hook 'prog-mode-hook 'turn-on-smartparens-mode))
-
 (use-package recentf
   :ensure t
   :defer 3
- )
-
+  )
 (use-package desktop
   :ensure t
   :defer 2

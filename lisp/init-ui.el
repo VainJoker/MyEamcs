@@ -7,7 +7,6 @@
 
 (use-package doom-themes
   :ensure t
-  :init
   ;; (load-theme 'doom-wilmersdorf t)
   ;; (load-theme 'doom-gruvbox t)
   ;; (doom-themes-treemacs-config)
@@ -16,7 +15,7 @@
   :config
   (kaolin-treemacs-theme)
   (treemacs-icons-dired-mode)
-  (load-theme 'kaolin-temple t)
+  (load-theme 'kaolin-aurora t)
   )
 
 ;; (setq color-themes (custom-available-themes))
@@ -31,6 +30,7 @@
 
 
 (use-package all-the-icons
+  :if (display-graphic-p)
   :ensure t
   )
 
@@ -43,7 +43,7 @@
     :config
     (nyan-mode 1)
     (setq nyan-animate-nyancat t)
-    (setq nyan-bar-length 110)
+    (setq nyan-bar-length 90)
     (setq nyan-wavy-trail nil)
     (setq mode-line-format
 	  (list
@@ -76,14 +76,14 @@
     (add-hook 'prog-mode-hook '@-enable-rainbow)
     ))
 
-(use-package rainbow-delimiters
-  :ensure t
-  :config
-  (progn
-    (defun @-enable-rainbow-delimiters ()
-      (rainbow-delimiters-mode t))
-    (add-hook 'prog-mode-hook '@-enable-rainbow-delimiters))
-  )
+;; (use-package rainbow-delimiters
+;;   :ensure t
+;;   :config
+;;   (progn
+;;     (defun @-enable-rainbow-delimiters ()
+;;       (rainbow-delimiters-mode t))
+;;     (add-hook 'prog-mode-hook '@-enable-rainbow-delimiters))
+;;   )
 
 (use-package dashboard 
   :ensure t 

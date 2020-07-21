@@ -2,6 +2,20 @@
 # contributor : Jimmy Wu <frozenthrone88@gmail.com>
 # name: <html>...</html>
 # --
-<html>
-  $0
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
+	<meta name="Author" content="VainJoker">
+	<meta name="Keywords" content="$2"/>
+	<meta name="Description" content="$3"/>
+	<link href="$4.css" rel="stylesheet">
+    <script src="$5.js"></script>
+	<title><++></title>
+</head>
+<body>
+	$0
+</body>
 </html>
