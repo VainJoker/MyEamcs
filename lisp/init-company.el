@@ -1,4 +1,5 @@
 (use-package company 
+  :ensure t 
   :hook (after-init . global-company-mode) 
   :defer 2
   :bind (:map company-active-map
@@ -16,14 +17,14 @@
 	company-show-numbers t
 	)
   (use-package company-lsp
-    :defer 2
     :ensure t
+    :defer 2
     :config
     (push 'company-lsp company-backends)
     )
   (use-package company-tabnine
-    :defer 2
     :ensure t
+    :defer 2
     :after 'company-mode 'company-tabnine-mode
     :config
     (add-to-list 'company-backends #'company-tabnine))
@@ -98,12 +99,6 @@
       (append (if (consp backend) backend (list backend))
 	      '(:with company-yasnippet))))
   (setq company-backends (mapcar #'company-mode/backend-with-yas company-backends))
-
-  (use-package company-graphviz-dot
-  ;; :ensure t
-  :defer 3
-  :after graphviz-dot-mode
-  )
 
   )
 

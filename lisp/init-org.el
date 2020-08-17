@@ -122,12 +122,6 @@
              (setq org-reveal-root "https://cdn.jsdelivr.net/npm/reveal.js")
              )
 
-(use-package ob-go
-  :ensure t
-  :defer 5
-  :after org
-  )
-
 
 (use-package org-superstar              ; supersedes `org-bullets'
   :ensure t
@@ -158,6 +152,7 @@
 
 (use-package org2ctex
   :ensure t
+  :after org
   :defer 5
   :config
   (org2ctex-toggle 1)
@@ -185,21 +180,6 @@
   :defer 2
   )
 
-  ;; (use-package org-latex-instant-preview
-  ;;   :ensure t 
-  ;;   :defer t
-  ;;   :hook (org-mode . org-latex-instant-preview-mode)
-  ;;   :init
-  ;;   (setq org-latex-instant-preview-tex2svg-bin
-  ;; 	  ;; location of tex2svg executable
-  ;; 	  "~/node_modules/mathjax-node-cli/bin/tex2svg"))
-
-;; (use-package valign
-;;   :ensure t
-;;   :defer 2
-;;   :config
-;;   (add-hook 'org-mode-hook #'valign-mode)
-;;   )
 
 
 (use-package cal-china-x
@@ -316,6 +296,21 @@
 ;;     (emacs-lisp . t)
 ;;     (shell . t)))
 
+  ;; (use-package org-latex-instant-preview
+  ;;   :ensure t 
+  ;;   :defer t
+  ;;   :hook (org-mode . org-latex-instant-preview-mode)
+  ;;   :init
+  ;;   (setq org-latex-instant-preview-tex2svg-bin
+  ;; 	  ;; location of tex2svg executable
+  ;; 	  "~/node_modules/mathjax-node-cli/bin/tex2svg"))
+
+;; (use-package valign
+;;   :ensure t
+;;   :defer 2
+;;   :config
+;;   (add-hook 'org-mode-hook #'valign-mode)
+;;   )
 
 (provide 'init-org)
 

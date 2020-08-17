@@ -36,27 +36,6 @@
                    yasnippet
                    recentf
                    dashboard
-		   ;; counsel-projectile
-		   ;; wucuo
-                   ;; org
-                   ; pdf-tools
-                   ; windmove
-                   ; go-mode
-                   ;; perspective
-                   ;; google-translate
-                   ;; telega
-                   ;; youdao-dictionary
-                   ;; bongo
-                   ;; projectile
-                   ;; ox
-                   ;; org-pomodoro
-                   ;; company
-                   ;; company-lsp
-                   ;; company-tabnine
-                   ;; yasnippet-snippets
-                   ; lsp-mode
-                   ; lsp-ui
-                   ; flycheck
                    ))
   (require package))
 ;; dump image

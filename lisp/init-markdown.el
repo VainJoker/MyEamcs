@@ -3,8 +3,8 @@
 ;;; Code:
 
 (use-package markdown-mode
-  :defer 5
   :ensure t
+  :defer 5
  )
 
 

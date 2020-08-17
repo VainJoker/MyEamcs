@@ -43,7 +43,7 @@
   (add-hook 'prog-mode-hook #'yas-minor-mode)
   (add-hook 'text-mode-hook #'yas-minor-mode)
   (setq yas-snippet-dirs
-	'("~/.emacs.d/snippets"                 ;; personal snippets
+	'("~/.emacs.d/var/snippets"                 ;; personal snippets
 	  ))
   (use-package yasnippet-snippets
     :defer t

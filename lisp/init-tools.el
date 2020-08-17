@@ -38,16 +38,15 @@
   (smart-input-source-global-follow-context-mode)
   )
 
-
 (use-package multiple-cursors
   :ensure t 
   :defer 4
   )
-(use-package eyebrowse
-  :ensure t
-  :defer 3
-  :config
-  (eyebrowse-mode 1))
+;; (use-package eyebrowse
+;;   :ensure t
+;;   :defer 3
+;;   :config
+;;   (eyebrowse-mode 1))
 (use-package hideshow 
   :defer 2
   :ensure t 
@@ -64,7 +63,8 @@
   ("M-s a" . ag-project)
   ) 
 (use-package smartparens
-  :ensure smartparens
+  :ensure t
+  :defer 3
   :config
   (progn
     (show-smartparens-global-mode t))
@@ -124,12 +124,6 @@
     (global-undo-tree-mode)
     (setq undo-tree-visualizer-timestamps t)
     (setq undo-tree-visualizer-diff t)))
-(use-package graphviz-dot-mode
-  :defer 2
-  :ensure t
-  :config
-  (setq graphviz-dot-indent-width 4)
-  )
 
 (use-package benchmark-init
   :ensure t

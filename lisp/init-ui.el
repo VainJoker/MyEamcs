@@ -74,6 +74,7 @@
 
 (use-package rainbow-mode
   :ensure t
+  :defer 1
   :config
   (progn
     (defun @-enable-rainbow ()
@@ -83,6 +84,7 @@
 
 (use-package rainbow-delimiters
   :ensure t
+  :defer 1
   :config
   (progn
     (defun @-enable-rainbow-delimiters ()

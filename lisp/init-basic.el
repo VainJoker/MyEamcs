@@ -26,16 +26,15 @@
   (which-key-mode))
 
 (use-package ace-window
-  :defer 2
   :ensure t
+  :defer 2
   :init
   (progn
     (global-set-key [remap other-window] 'ace-window)
-    (custom-set-faces
-     '(aw-leading-char-face
-       ((t (:inherit ace-jump-face-foreground :height 3.0 :foreground "red")))))))
+    ))
 
 (use-package swiper
+  :ensure t
   :bind
   (("C-s" . swiper)
    ("C-r" . swiper)
@@ -47,61 +46,65 @@
     (ivy-mode 1)
     (setq ivy-use-virtual-buffers t)
     (setq ivy-display-style 'fancy)
-    (define-key read-expression-map (kbd "C-r") 'counsel-expression-history)))
+    (define-key read-expression-map (kbd "C-r") 'counsel-expression-history))
+  )
 
 (use-package counsel
   :ensure t
   :bind
   (("C-x C-r" . 'counsel-recentf)
-   ("C-x d" . 'counsel-dired)))
+   ("C-x d" . 'counsel-dired))
+  )
 
 (use-package avy
   :ensure t
   :bind (("M-g :" . 'avy-goto-char)
-         ("M-g '" . 'avy-goto-char-2)
-         ("M-g \"" . 'avy-goto-char-timer)
-         ("M-g f" . 'avy-goto-line)
-         ("M-g w" . 'avy-goto-word-1)
-         ("M-g e" . 'avy-goto-word-0)))
+	 ("M-g '" . 'avy-goto-char-2)
+	 ("M-g \"" . 'avy-goto-char-timer)
+	 ("M-g f" . 'avy-goto-line)
+	 ("M-g w" . 'avy-goto-word-1)
+	 ("M-g e" . 'avy-goto-word-0))
+  )
 
 (use-package hungry-delete
-  :defer 2
   :ensure t
+  :defer 2
   :hook ('prog-mode . 'global-hungry-delete-mode)
   )
 
 
-(use-package rime
-  :defer 2
-  :ensure t
-  :config
-  (setq rime-user-data-dir "~/.config/fcitx/rime")
-  (setq default-input-method "rime"
-        rime-show-candidate 'posframe)
-  (setq rime-posframe-properties
-	(list :background-color "#333333"
-              :foreground-color "#dcdccc"
-              :font "WenQuanYi Micro Hei Mono-14"
-              :internal-border-width 10))
-  (setq rime-disable-predicates
-      '(rime-predicate-evil-mode-p
-        rime-predicate-after-alphabet-char-p
-        rime-predicate-prog-in-code-p))
-  :bind
-  ("M-n" . 'rime-force-enable)
-  )
+;; (use-package rime
+;;   :defer 2
+;;   :ensure t
+;;   :config
+;;   (setq rime-user-data-dir "~/.config/fcitx/rime")
+;;   (setq default-input-method "rime"
+;;         rime-show-candidate 'posframe)
+;;   (setq rime-posframe-properties
+;; 	(list :background-color "#333333"
+;;               :foreground-color "#dcdccc"
+;;               :font "WenQuanYi Micro Hei Mono-14"
+;;               :internal-border-width 10))
+;;   (setq rime-disable-predicates
+;;       '(rime-predicate-evil-mode-p
+;;         rime-predicate-after-alphabet-char-p
+;;         rime-predicate-prog-in-code-p))
+;;   :bind
+;;   ("M-n" . 'rime-force-enable)
+;;   )
 
 
 (use-package helpful
- :defer 2
- :config
- (global-set-key (kbd "C-h f") #'helpful-callable)
- (global-set-key (kbd "C-h v") #'helpful-variable)
- (global-set-key (kbd "C-h k") #'helpful-key)
- (global-set-key (kbd "C-c C-d") #'helpful-at-point)
- (global-set-key (kbd "C-h F") #'helpful-function)
- (global-set-key (kbd "C-h C") #'helpful-command)
-)
+  :ensure t 
+  :defer 2
+  :config
+  (global-set-key (kbd "C-h f") #'helpful-callable)
+  (global-set-key (kbd "C-h v") #'helpful-variable)
+  (global-set-key (kbd "C-h k") #'helpful-key)
+  (global-set-key (kbd "C-c C-d") #'helpful-at-point)
+  (global-set-key (kbd "C-h F") #'helpful-function)
+  (global-set-key (kbd "C-h C") #'helpful-command)
+  )
 
 
 (provide 'init-basic)
