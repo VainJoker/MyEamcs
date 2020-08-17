@@ -7,6 +7,8 @@ transient
 require
 url/
 var/
+!var/banner
+!var/snippets
 emacs.pdmp
 .emacs.desktop
 .lsp-session-v1
