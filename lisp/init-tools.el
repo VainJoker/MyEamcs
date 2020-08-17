@@ -27,15 +27,15 @@
   (setq indent-guide-recursive t)
   )
 
-(use-package smart-input-source
+(use-package sis
   :ensure t
   :after evil 
   :config
-  (smart-input-source-ism-lazyman-config nil nil 'fcitx5)
-  (smart-input-source-global-inline-mode)
-  (smart-input-source-global-respect-mode)
-  (smart-input-source-global-cursor-color-mode)
-  (smart-input-source-global-follow-context-mode)
+  (sis-ism-lazyman-config nil nil 'fcitx5)
+  (sis-global-inline-mode)
+  (sis-global-respect-mode)
+  (sis-global-cursor-color-mode)
+  (sis-global-follow-context-mode)
   )
 
 (use-package multiple-cursors
