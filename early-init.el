@@ -19,8 +19,6 @@
 (tool-bar-mode -1)
 (scroll-bar-mode -1)
 (menu-bar-mode -1)
-(setq custom-file "~/.emacs.d/lisp/init-custom.el")
-(load custom-file)
 (setq  initial-scratch-message "                                                            Happy Hacking , VainJoker \n ")
 ;; yes-or-no-p to y-or-n-p
 (fset 'yes-or-no-p 'y-or-n-p)
@@ -70,4 +68,5 @@
 (global-set-key (kbd "S-<return>") 'comment-indent-new-line)
 ;; 让光标无法离开视线
 (setq mouse-yank-at-point nil)
+
 

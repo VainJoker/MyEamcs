@@ -7,24 +7,28 @@
 
 (use-package doom-themes
   :ensure t
+  :config
   ;; (load-theme 'doom-wilmersdorf t)
+  ;; (load-theme 'doom-vibrant t)
   ;; (load-theme 'doom-gruvbox t)
   ;; (doom-themes-treemacs-config)
   )
 (use-package kaolin-themes
+  :ensure t
   :config
   (kaolin-treemacs-theme)
   (treemacs-icons-dired-mode)
-  (load-theme 'kaolin-aurora t)
+  ;; (load-theme 'kaolin-aurora t)
+  (load-theme 'kaolin-galaxy t)
   )
 
-;; (setq color-themes (custom-available-themes))
-;; (defun random-color-theme ()
-;;   (interactive)
-;;   (random t)
-;;   (load-theme
-;;    (nth (random (length color-themes)) color-themes)
-;;    t))
+(setq color-themes (custom-available-themes))
+(defun random-color-theme ()
+  (interactive)
+  (random t)
+  (load-theme
+   (nth (random (length color-themes)) color-themes)
+   t))
 ;; (random-color-theme)
 ;; (run-with-timer 1 (* 120 60) 'random-color-theme)
 
@@ -39,6 +43,7 @@
   :init (doom-modeline-mode 1)
   :config
   (use-package nyan-mode
+    :after doom-modeline
     :ensure t
     :config
     (nyan-mode 1)
@@ -76,14 +81,14 @@
     (add-hook 'prog-mode-hook '@-enable-rainbow)
     ))
 
-;; (use-package rainbow-delimiters
-;;   :ensure t
-;;   :config
-;;   (progn
-;;     (defun @-enable-rainbow-delimiters ()
-;;       (rainbow-delimiters-mode t))
-;;     (add-hook 'prog-mode-hook '@-enable-rainbow-delimiters))
-;;   )
+(use-package rainbow-delimiters
+  :ensure t
+  :config
+  (progn
+    (defun @-enable-rainbow-delimiters ()
+      (rainbow-delimiters-mode t))
+    (add-hook 'prog-mode-hook '@-enable-rainbow-delimiters))
+  )
 
 (use-package dashboard 
   :ensure t 
@@ -94,7 +99,7 @@
   (setq dashboard-banner-logo-title
         "Hello Vain Joker!")
   ;; 设置banner
-  (setq dashboard-startup-banner "~/.emacs.d/banner/a.png") 
+  (setq dashboard-startup-banner "~/.emacs.d/var/banner/a.png") 
   (setq dashboard-center-content t) 
   (setq dashboard-set-heading-icons t) 
   (setq dashboard-set-file-icons t) 

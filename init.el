@@ -2,7 +2,7 @@
       user-mail-address "vainjoker@163.com")
 
 (setq package-archives '(("gnu"   . "http://mirrors.tuna.tsinghua.edu.cn/elpa/gnu/")
-                         ("melpa" . "http://mirrors.tuna.tsinghua.edu.cn/elpa/melpa/")))
+			 ("melpa" . "http://mirrors.tuna.tsinghua.edu.cn/elpa/melpa/")))
 
 (unless (package-installed-p 'use-package)
   (package-refresh-contents)
@@ -10,12 +10,11 @@
 
 (defvar vainjoker-dumped nil
   "non-nil when a dump file is loaded (because dump.el sets this variable).")
-
 (defmacro vainjoker-if-dump (then &rest else)
   "Evaluate IF if running with a dump file, else evaluate ELSE."
   (declare (indent 1))
   `(if vainjoker-dumped
-     ,then
+       ,then
      ,@else))
 
 (defun vainjoker-dump ()
@@ -23,31 +22,29 @@
   (interactive)
   (let ((buf "*dump process*"))
     (make-process
-      :name "dump"
-      :buffer buf
-      :command (list "emacs" "--batch" "-q"
-                     "-l" (expand-file-name "dump.el"
-                                            user-emacs-directory)))
+     :name "dump"
+     :buffer buf
+     :command (list "emacs" "--batch" "-q"
+		    "-l" (expand-file-name "dump.el"
+					   user-emacs-directory)))
     (display-buffer buf)))
 
 (vainjoker-if-dump
-  (progn
-    (setq load-path vainjoker-dumped-load-path)
-    (global-font-lock-mode)
-    (transient-mark-mode)
-    (add-hook 'after-init-hook
-              (lambda ()
-                (save-excursion
-                  (switch-to-buffer "*scratch*")
-                  (lisp-interaction-mode)))))
+    (progn
+      (setq load-path vainjoker-dumped-load-path)
+      (global-font-lock-mode)
+      (transient-mark-mode)
+      (add-hook 'after-init-hook
+		(lambda ()
+		  (save-excursion
+		    (switch-to-buffer "*scratch*")
+		    (lisp-interaction-mode)))))
   ;; add load-path’s and load autoload files
   (package-initialize))
 
 (add-to-list 'load-path "~/.emacs.d/lisp")
 (add-to-list 'load-path "~/.emacs.d/site-lisp")
 (add-to-list 'load-path "~/.emacs.d/themes")
-;; (setq custom-file "~/.emacs.d/lisp/init-custom.el")
-;; (load custom-file)
 
 (require 'init-ui)
 (require 'init-tools)
@@ -65,61 +62,100 @@
 (require 'init-c)
 (require 'init-python)
 (require 'init-web)
-(require 'init-keybinds)
 (require 'init-ivy)
 (require 'init-filemanager)
 (require 'init-eaf)
-(require 'init-java)
+(require 'init-keybinds)
+;; (require 'init-java)
+(require 'init-mail)
 
+(setq user-mail-address "vainjoker@163.com"
+      user-full-name "vainjoker")
+(setq message-send-mail-function 'smtpmail-send-it
+        smtpmail-default-smtp-server "smtp.163.com"
+        smtpmail-smtp-server "smtp.163.com"
+        smtpmail-smtp-service 465
+        smtpmail-stream-type 'ssl
+        smtpmail-local-domain "homepc")
 
+;; (setq gnus-select-method
+;;       '(nnimap "163.com"
+;;                (nnimap-address "imap.163.com")
+;;                (nnimap-inbox "INBOX")
+;;                (nnimap-expunge t)
+;;                (nnimap-server-port 993)
+;;                (nnimap-stream ssl)))
 
-;; (defmacro k-time (&rest body)
-;;   "Measure and return the time it takes evaluating BODY."
-;;   `(let ((time (current-time)))
-;;      ,@body
-;;      (float-time (time-since time))))
-;; (defvar k-gc-timer
-;;   (run-with-idle-timer 15 t
-;;                        'garbage-collect))
-;; (setq read-process-output-max (* 1024 1024 128))
-;; (setq load-path (cons (expand-file-name "~/.emacs.d/site-lisp/") load-path))
-;; (setq gc-cons-threshold (* 2 1000 1000))
-;; (custom-set-variables
-;;  ;; custom-set-variables was added by Custom.
-;;  ;; If you edit it by hand, you could mess it up, so be careful.
-;;  ;; Your init file should contain only one such instance.
-;;  ;; If there is more than one, they won't work right.
-;;  '(ag-highligh-search t t)
-;;  '(ag-reuse-buffers t t)
-;;  '(ag-reuse-window t t)
-;;  '(counsel-grep-base-command
-;;    "ag -S --noheading --nocolor --nofilename --numbers '%s' %s")
-;;  '(counsel-yank-pop-height 15 t)
-;;  '(custom-safe-themes
-;;    '("e2acbf379aa541e07373395b977a99c878c30f20c3761aac23e9223345526bcc" "79586dc4eb374231af28bbc36ba0880ed8e270249b07f814b0e6555bdcb71fab" "776c1ab52648f98893a2aa35af2afc43b8c11dd3194a052e0b2502acca02bfce" "2f1518e906a8b60fac943d02ad415f1d8b3933a5a7f75e307e6e9a26ef5bf570" default))
-;;  '(eaf-find-alternate-file-in-dired t t)
-;;  '(enable-recursive-minibuffers t)
-;;  '(ivy-on-del-error-function nil)
-;;  '(ivy-posframe-display-functions-alist '((t . ivy-posframe-display-at-frame-center)))
-;;  '(ivy-posframe-height 11)
-;;  '(ivy-posframe-parameters '((left-fringe . 8) (right-fringe . 8)))
-;;  '(ivy-posframe-width 130)
-;;  '(ivy-use-selectable-prompt t)
-;;  '(ivy-use-virtual-buffers t)
-;;  '(lsp-keymap-prefix "C-,")
-;;  '(lsp-ui-doc-delay 3 t)
-;;  '(org-roam-directory "~/org-roam")
-;;  '(package-selected-packages
-;;    '(ccls indent-guide counsel-etags company-graphviz-dot company-ctags multiple-cursors multi-cursor kaolin-themes exwm dashboard circadian fancy-battery nyan-mode spaceline-all-the-icons spaceline dap-go dap-mode ag company-posframe company-box company-go ubuntu-theme tramp-theme dracula-theme darcula-theme parinfer eyebrowse deft yasnippet-snippets yasnippet go-mode doom-themes use-package rainbow-mode rainbow-delimiters posframe doom-modeline))
-;;  '(pos-tip-background-color "#303035")
-;;  '(pos-tip-foreground-color "#d4d4d6")
-;;  '(send-mail-function 'mailclient-send-it)
-;;  '(swiper-action-recenter t)
-;;  '(which-key-popup-type 'side-window))
-;; (custom-set-faces
-;;  ;; custom-set-faces was added by Custom.
-;;  ;; If you edit it by hand, you could mess it up, so be careful.
-;;  ;; Your init file should contain only one such instance.
-;;  ;; If there is more than one, they won't work right.
-;;  '(aw-leading-char-face ((t (:inherit ace-jump-face-foreground :height 3.0 :foreground "red"))))
-;;  '(flycheck-posframe-border-face ((t (:inherit default)))))
+;; (setq send-mail-function 'smtpmail-send-it
+;;       smtpmail-smtp-server "smtp.163.com"
+;;       smtpmail-smtp-service 994
+;;       smtpmail-stream-type 'ssl
+;;       gnus-ignored-newsgroups "^to\\.\\|^[0-9. ]+\\( \\|$\\)\\|^[\"]\"[#'()]")
+
+;; (setq send-mail-function 'smtpmail-send-it
+;;       message-send-mail-function 'smtpmail-send-it
+;;       smtpmail-stream-type 'plain
+;;       smtpmail-smtp-server "smtp.163.com"
+;;       smtpmail-smtp-service 25
+;;       smtpmail-smtp-user "vainjoker@163.com")
+;; (setq auth-sources '((:source "~/.emacs.d/gnus/authinfo")))
+;; (require 'gnus) ;; 设置自己的默认email地址，和用户名
+;; (setq user-mail-address	"vainjoker@163.com"
+;;       user-full-name	"vainjoker")
+
+;; ;;设置获取邮件的服务区地址
+;; (setq gnus-select-method '(nnimap "pop.163.com"))
+;; ;;(add-to-list 'gnus-secondary-select-methods '(nnimap "imap.qq.com"))
+
+;; ;;设置发送邮件的服务器地址
+;; (setq send-mail-function 'smtpmail-send-it
+;;       message-send-mail-function 'smtpmail-send-it
+;;       smtpmail-smtp-server "pop.163.com")
+
+(custom-set-variables
+ ;; custom-set-variables was added by Custom.
+ ;; If you edit it by hand, you could mess it up, so be careful.
+ ;; Your init file should contain only one such instance.
+ ;; If there is more than one, they won't work right.
+ '(custom-enabled-themes '(kaolin-galaxy))
+ '(custom-safe-themes
+   '("7e5d400035eea68343be6830f3de7b8ce5e75f7ac7b8337b5df492d023ee8483" default))
+ '(fci-rule-color "#556873")
+ '(jdee-db-active-breakpoint-face-colors (cons "#0d0f11" "#7FC1CA"))
+ '(jdee-db-requested-breakpoint-face-colors (cons "#0d0f11" "#A8CE93"))
+ '(jdee-db-spec-breakpoint-face-colors (cons "#0d0f11" "#899BA6"))
+ '(objed-cursor-color "#DF8C8C")
+ '(package-selected-packages
+   '(lsp-pyright jedi company-jedi lsp-python-ms python-black live-py-mode company-solidity solidity-flycheck solidity-mode editorconfig isolate org-latex-instant-preview cdlatex valign smart-input-source sis youdao-dictionary yasnippet-snippets which-key web-mode wanderlust vue-mode vterm use-package try treemacs-projectile treemacs-persp treemacs-magit treemacs-icons-dired treemacs-evil smartparens scss-mode rime rainbow-mode rainbow-delimiters ox-reveal ox-pandoc org2ctex org-superstar org-roam org-pomodoro ob-go nyan-mode nlinum-relative neotree multiple-cursors lsp-ui lsp-java kaolin-themes js2-mode ivy-rich ivy-posframe indent-guide hungry-delete graphviz-dot-mode google-translate go-mode general flycheck-posframe flycheck-pos-tip flycheck-popup-tip flx eyebrowse exwm evil-nerd-commenter evil-escape emmet-mode doom-themes doom-modeline deft dashboard dap-mode counsel-projectile counsel-etags company-web company-tabnine company-posframe company-lsp company-ctags company-box ccls cal-china-x benchmark-init auctex amx ag))
+ '(pdf-view-midnight-colors (cons "#c5d4dd" "#3c4c55"))
+ '(rustic-ansi-faces
+   ["#3c4c55" "#DF8C8C" "#A8CE93" "#DADA93" "#83AFE5" "#D18EC2" "#7FC1CA" "#c5d4dd"])
+ '(vc-annotate-background "#3c4c55")
+ '(vc-annotate-color-map
+   (list
+    (cons 20 "#A8CE93")
+    (cons 40 "#b8d293")
+    (cons 60 "#c9d693")
+    (cons 80 "#DADA93")
+    (cons 100 "#e2d291")
+    (cons 120 "#eaca90")
+    (cons 140 "#F2C38F")
+    (cons 160 "#e7b1a0")
+    (cons 180 "#dc9fb1")
+    (cons 200 "#D18EC2")
+    (cons 220 "#d58db0")
+    (cons 240 "#da8c9e")
+    (cons 260 "#DF8C8C")
+    (cons 280 "#c98f92")
+    (cons 300 "#b39399")
+    (cons 320 "#9e979f")
+    (cons 340 "#556873")
+    (cons 360 "#556873")))
+ '(vc-annotate-very-old-color nil))
+(custom-set-faces
+ ;; custom-set-faces was added by Custom.
+ ;; If you edit it by hand, you could mess it up, so be careful.
+ ;; Your init file should contain only one such instance.
+ ;; If there is more than one, they won't work right.
+ '(aw-leading-char-face ((t (:inherit ace-jump-face-foreground :height 3.0 :foreground "red"))))
+ '(flycheck-posframe-border-face ((t (:inherit default)))))

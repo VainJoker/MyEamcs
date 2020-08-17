@@ -98,11 +98,13 @@
       (append (if (consp backend) backend (list backend))
 	      '(:with company-yasnippet))))
   (setq company-backends (mapcar #'company-mode/backend-with-yas company-backends))
+
   (use-package company-graphviz-dot
   ;; :ensure t
   :defer 3
   :after graphviz-dot-mode
   )
+
   )
 
 

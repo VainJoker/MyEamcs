@@ -14,6 +14,8 @@
 (show-paren-mode 1)
 ;; 自动折行
 (toggle-truncate-lines t)
+;; 设置背景透明
+(set-frame-parameter nil 'alpha 0.8)
 ;; 窗口重绘
 (setq auto-window-vscroll nil)
 (use-package which-key

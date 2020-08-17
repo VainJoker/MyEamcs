@@ -13,6 +13,11 @@
   (setq nlinum-relative-offset 0)                 ;; 1 if you want 0, 2, 3...
   )
 
+(use-package editorconfig
+  :ensure t
+  :config
+  (editorconfig-mode 1))
+
 (use-package indent-guide
   :after prog-mode
   :ensure t
@@ -21,6 +26,18 @@
   (setq indent-guide-delay 0.1)
   (setq indent-guide-recursive t)
   )
+
+(use-package smart-input-source
+  :ensure t
+  :after evil 
+  :config
+  (smart-input-source-ism-lazyman-config nil nil 'fcitx5)
+  (smart-input-source-global-inline-mode)
+  (smart-input-source-global-respect-mode)
+  (smart-input-source-global-cursor-color-mode)
+  (smart-input-source-global-follow-context-mode)
+  )
+
 
 (use-package multiple-cursors
   :ensure t 
@@ -51,7 +68,20 @@
   :config
   (progn
     (show-smartparens-global-mode t))
-  (add-hook 'prog-mode-hook 'turn-on-smartparens-mode))
+  (add-hook 'prog-mode-hook 'turn-on-smartparens-mode)
+  (with-eval-after-load 'smartparens
+    (dolist (brace '("(" "{" "["))
+      (sp-pair brace nil
+	       :post-handlers '(("||\n[i]" "RET")
+				("| " "SPC"))
+	       :unless '(sp-point-before-word-p sp-point-before-same-p))))
+  )
+
+(use-package isolate
+  :ensure t 
+  :defer 3
+  )
+
 (use-package recentf
   :ensure t
   :defer 3
@@ -98,13 +128,30 @@
   :defer 2
   :ensure t
   :config
-  (setq graphviz-dot-indent-width 4))
+  (setq graphviz-dot-indent-width 4)
+  )
+
 (use-package benchmark-init
   :ensure t
   :defer 5
   :config
   (add-hook 'after-init-hook 'benchmark-init/deactivate)
   )
+
+  ;; (sis-ism-lazyman-config
+  ;;  ;; "com.apple.keylayout.ABC"
+  ;;  "com.apple.keylayout.US"
+  ;;  ;; "im.rime.inputmethod.Squirrel.Rime"
+  ;;  "com.sogou.inputmethod.sogou.pinyin")
+  ;; ;; enable the /cursor color/ mode
+  ;; (sis-global-cursor-color-mode t)
+  ;; ;; enable the /respect/ mode
+  ;; (sis-global-respect-mode t)
+  ;; ;; enable the /follow context/ mode for all buffers
+  ;; (sis-global-follow-context-mode t)
+  ;; ;; enable the /inline english/ mode for all buffers
+  ;; (sis-global-inline-mode t)
+
 ;; (use-package wanderlust
 ;;   :ensure t
 ;;   :defer 5

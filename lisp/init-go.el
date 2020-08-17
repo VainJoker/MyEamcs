@@ -34,7 +34,7 @@
 			   (local-set-key (kbd "C-c C-i") 'go-auto-insert)))
 (add-hook 'before-save-hook 'gofmt-before-save)
 
-					; i want use ob-go , above code just compile the code
+;; i want use ob-go , above code just compile the code
 (use-package ob-go
   :ensure t
   :defer 5

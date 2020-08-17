@@ -3,7 +3,6 @@
 (setq org-agenda-include-diary t)
 (setq org-agenda-diary-file "~/org/gtd/diary") 
 (setq diary-file "~/org/gtd/diary")
-
 (set-language-environment "UTF-8")
 (setq org-todo-keywords '((sequence "TODO" "DOING" "DONE" "DELAY" "ABORT")))
 (setq org-todo-keyword-faces '(
@@ -114,7 +113,6 @@
       (capitalize-word 1)
       (buffer-substring start end))))
 
-
 (use-package ox-reveal
              :ensure t
 	     :defer 2
@@ -133,16 +131,16 @@
 
 (use-package org-superstar              ; supersedes `org-bullets'
   :ensure t
-  :defer 2
   :after org
-  :hook
-  (org-mode-hook . org-superstar-mode-hook)
+  ;; :hook
+  ;; (org-mode-hook . org-superstar-mode-hook)
   :config
   (setq org-superstar-headline-bullets-list
-	'("☯" "❀" "✿" "▷" "✚" "◉" )
+	'("☯" "❀" "✿" "✚" "◉" "▷"  )
 	)
   (setq org-superstar-remove-leading-stars t)
   (add-hook 'org-mode-hook (lambda () (org-superstar-mode 1)))
+  (setq org-superstar-configure-like-org-bullets 1)
   )
 
 (use-package org-roam
@@ -186,6 +184,15 @@
   :ensure t
   :defer 2
   )
+
+  ;; (use-package org-latex-instant-preview
+  ;;   :ensure t 
+  ;;   :defer t
+  ;;   :hook (org-mode . org-latex-instant-preview-mode)
+  ;;   :init
+  ;;   (setq org-latex-instant-preview-tex2svg-bin
+  ;; 	  ;; location of tex2svg executable
+  ;; 	  "~/node_modules/mathjax-node-cli/bin/tex2svg"))
 
 ;; (use-package valign
 ;;   :ensure t

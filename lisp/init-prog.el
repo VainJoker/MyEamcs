@@ -51,10 +51,29 @@
     )
   )
 
-
-
-
-
-
+;; (setq solidity-solc-path "/bin/solc")
+;; (use-package solidity-mode
+;;   :ensure t
+;;   :config
+;;   (define-key solidity-mode-map (kbd "C-c C-g") 'solidity-estimate-gas-at-point)
+;;   (use-package solidity-flycheck
+;;     :ensure t
+;;     :after solidity-mode
+;;     :config
+;;     (setq solidity-flycheck-solc-checker-active t)
+;;     (setq solidity-flycheck-solium-checker-active t)
+;;     (setq flycheck-solidity-solc-addstd-contracts t)
+;;     )
+;;   (use-package company-solidity
+;;     :ensure t
+;;     :after solidity-mode
+;;     :config
+;;     (add-hook 'solidity-mode-hook
+;; 	      (lambda ()
+;; 		(set (make-local-variable 'company-backends)
+;; 		     (append '((company-solidity company-capf company-dabbrev-code))
+;; 			     company-backends))))
+;;     )
+;;   )
 (provide 'init-prog)
 

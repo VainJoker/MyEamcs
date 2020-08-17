@@ -8,8 +8,9 @@
   (setq TeX-command-default "XeLaTeX")
   (use-package cdlatex
     :ensure t
+    :defer 5
     )
   )
 
 (provide 'init-tex)
- 
+

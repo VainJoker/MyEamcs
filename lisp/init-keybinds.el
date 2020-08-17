@@ -73,6 +73,7 @@
    "D" 'deft
    "G" 'magit-status
    "P" 'projectile-command-map
+   "T" 'random-color-theme
    )
 
   (my-leader-def

@@ -11,7 +11,6 @@
                    ;; doom-themes
                    kaolin-themes
                    doom-modeline
-		   nyan-mode
                    which-key
                    ;; benchmark-init
                    counsel
