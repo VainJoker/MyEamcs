@@ -6,21 +6,9 @@
   ;; Always delete and copy recursively
   (setq dired-recursive-deletes 'always
 	dired-recursive-copies 'always)
-
-  ;; Using `insert-directory-program'
-  (setq ls-lisp-use-insert-directory-program t)
-
   ;; Show directory first
   (setq dired-listing-switches "-alh --group-directories-first")
-
-  ;; Quick sort dired buffers via hydra
-  (use-package dired-quick-sort
-    :bind (:map dired-mode-map
-		("S" . hydra-dired-quick-sort/body))))
-;; Show git info in dired
-(use-package dired-git-info
-  :bind (:map dired-mode-map
-	      (")" . dired-git-info-mode)))
+  )
 
 ;; Allow rsync from dired buffers
 (use-package dired-rsync

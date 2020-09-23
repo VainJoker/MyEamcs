@@ -94,10 +94,7 @@
   ;; Use the faster search tool: ripgrep (`rg')
   (when (executable-find "rg")
     (setq counsel-grep-base-command "rg -S --no-heading --line-number --color never %s %s")
-    (when (and sys/macp (executable-find "gls"))
-      (setq counsel-find-file-occur-use-find nil
-            counsel-find-file-occur-cmd
-            "gls -a | grep -i -E '%s' | tr '\\n' '\\0' | xargs -0 gls -d --group-directories-first")))
+    )
   :config
   (with-no-warnings
     ;; Display an arrow with the selected item
