@@ -102,8 +102,7 @@
              :bind (("C-c y" . my-youdao-dictionary-search-at-point)
                     ("C-c Y" . youdao-dictionary-search-at-point)
                     :map youdao-dictionary-mode-map
-                    ("h" . youdao-dictionary-hydra/body)
-                    ("?" . youdao-dictionary-hydra/body))
+		    )
              :init
              (setq url-automatic-caching t
                    youdao-dictionary-use-chinese-word-segmentation t) ; 中文分词
@@ -116,15 +115,7 @@
                    (youdao-dictionary-search-at-point-posframe)
                    (youdao-dictionary-search-at-point-tooltip))
                  (youdao-dictionary-search-at-point)))
-             :config
-             (with-eval-after-load 'hydra
-                                   (defhydra youdao-dictionary-hydra (:color blue)
-                                             ("p" youdao-dictionary-play-voice-of-current-word "play voice of current word")
-                                             ("y" youdao-dictionary-play-voice-at-point "play voice at point")
-                                             ("q" quit-window "quit")
-                                             ("C-g" nil nil)
-                                             ("h" nil nil)
-                                             ("?" nil nil))))
+	     )
 
 ;; A Simple and cool pomodoro timer
 (use-package pomidor
@@ -216,8 +207,6 @@
              (ztreep-diff-model-ignored-face ((t (:inherit font-lock-doc-face :strike-through t))))
              (ztreep-diff-model-diff-face ((t (:inherit diff-removed))))
              (ztreep-diff-model-add-face ((t (:inherit diff-nonexistent))))
-             :bind (:map ztreediff-mode-map
-                         ("C-<f5>" . ztree-hydra/body))
              :init (setq ztree-draw-unicode-lines t
                          ztree-show-number-of-children t))
 
@@ -236,17 +225,16 @@
       (sp-pair brace nil
 	       :post-handlers '(("||\n[i]" "RET")
 				("| " "SPC"))
-	       :unless '(sp-point-before-word-p sp-point-before-same-p))))
+	       :unless '(sp-point-before-word-p sp-point-before-same-p)))
+    )
   )
 ;
 ; Misc
 (use-package copyit)                    ; copy path, url, etc.
 (use-package diffview)                  ; side-by-side diff view
-(use-package esup)                      ; Emacs startup profiler
 (use-package focus)                     ; Focus on the current region
 (use-package list-environment)
 (use-package memory-usage)
-(use-package daemons)                 ; system services/daemons
 (use-package tldr)
 
 (provide 'init-utils)

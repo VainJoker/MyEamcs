@@ -4,7 +4,7 @@
               all-the-icons-material
               winner-undo
               widget-forward)
-  :custom-face (dashboard-heading ((t (:inherit (font-lock-string-face bold)))))
+  ;; :custom-face (dashboard-heading ((t (:inherit (font-lock-string-face bold)))))
   ;; :pretty-hydra
   ;; ((:title (pretty-hydra-title "Dashboard" 'material "dashboard" :height 1.1 :v-adjust -0.225)
   ;;          :color pink :quit-key "q")
@@ -42,14 +42,19 @@
               ("?" . dashboard-hydra/body))
   :hook (dashboard-mode . (lambda () (setq-local frame-title-format "")))
   :init
-  (setq dashboard-banner-logo-title "Hello Hacking VainJoker!"
+  (setq dashboard-banner-logo-title "Happy Hacking, VainJoker!"
         dashboard-startup-banner "~/.emacs.d/var/banner/a.png"
         dashboard-center-content t
         dashboard-show-shortcuts nil
-        dashboard-items '((recents  . 5)
+        dashboard-items '(
+                          (recents  . 5)
                           (bookmarks . 5)
-                          (projects . 5))
+                          (projects . 5)
+                          (registers . 5)
+        )
         dashboard-set-init-info t
+        dashboard-set-heading-icons t
+        dashboard-set-file-icons t
         dashboard-heading-icons '((recents   . "file-text")
                                   (bookmarks . "bookmark")
                                   (agenda    . "calendar")
@@ -69,27 +74,21 @@
         dashboard-set-navigator t
         dashboard-navigator-buttons
         `(((,(when (display-graphic-p)
-               (all-the-icons-octicon "mark-github" :height 1.1 :v-adjust 0.0))
-            "Homepage" "Browse homepage"
-            (lambda (&rest _) (browse-url "")))
+               (all-the-icons-octicon "mark-github" :height 1.0 :v-adjust 0.0))
+            "HOMEPAGE" "Browse homepage"
+            (lambda (&rest _) (browse-url "github.com/VainJoker")))
            (,(when (display-graphic-p)
                (all-the-icons-material "restore" :height 1.35 :v-adjust -0.24))
-            "Restore" "Restore previous session"
+            "RESTORE" "Restore previous session"
             (lambda (&rest _) (restore-previous-session)))
            (,(when (display-graphic-p)
                (all-the-icons-octicon "tools" :height 1.0 :v-adjust 0.0))
-            "Settings" "Open custom file"
+            "SETTING" "Open custom file"
             (lambda (&rest _) (find-file custom-file)))
-           ;; (,(when (display-graphic-p)
-           ;;     (all-the-icons-material "update" :height 1.35 :v-adjust -0.24))
-           ;;  "Update" "Update Centaur Emacs"
-           ;;  (lambda (&rest _) (centaur-update)))
-           ;; (,(if (display-graphic-p)
-           ;;       (all-the-icons-faicon "question" :height 1.2 :v-adjust -0.1)
-           ;; "?")
-           ;; "" "Help (?/h)"
-           ;; (lambda (&rest _) (dashboard-hydra/body))
-           ;; font-lock-string-face
+           (,(when (display-graphic-p)
+               (all-the-icons-faicon "question" :height 1.0 :v-adjust 0.0))
+            "README" "Help (?/h)"
+            (lambda (&rest _) (find-file "~/.emacs.d/README.org")))
            ))))
 (dashboard-setup-startup-hook)
 :config

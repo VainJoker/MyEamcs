@@ -371,17 +371,12 @@ This is for use in `ivy-re-builders-alist'."
             (t . ivy-prescient-re-builder))
           ivy-prescient-sort-commands
           '(:not swiper swiper-isearch ivy-switch-buffer
-                 lsp-ivy-workspace-symbol ivy-resume ivy--restore-session
-                 counsel-grep counsel-git-grep counsel-rg counsel-ag
-                 counsel-ack counsel-fzf counsel-pt counsel-imenu
-                 counsel-yank-pop counsel-recentf counsel-buffer-or-recentf))
+            lsp-ivy-workspace-symbol ivy-resume ivy--restore-session
+            counsel-grep counsel-git-grep counsel-rg counsel-ag
+            counsel-ack counsel-fzf counsel-pt counsel-imenu
+            counsel-yank-pop counsel-recentf counsel-buffer-or-recentf))
 
     (ivy-prescient-mode 1))
-
-  ;; Additional key bindings for Ivy
-  (use-package ivy-hydra
-    :commands ivy-hydra-read-action
-    :init (setq ivy-read-action-function #'ivy-hydra-read-action))
 
   ;; Ivy integration for Projectile
   (use-package counsel-projectile
@@ -405,12 +400,12 @@ This is for use in `ivy-re-builders-alist'."
   ;; Display world clock using Ivy
   (use-package counsel-world-clock
     :bind (:map counsel-mode-map
-                ("C-c c k" . counsel-world-clock)))
+           ("C-c c k" . counsel-world-clock)))
 
   ;; Tramp ivy interface
   (use-package counsel-tramp
     :bind (:map counsel-mode-map
-                ("C-c c T" . counsel-tramp)))
+           ("C-c c T" . counsel-tramp)))
 
   ;; Support pinyin in Ivy
   ;; Input prefix ':' to match pinyin
@@ -474,23 +469,25 @@ This is for use in `ivy-re-builders-alist'."
   (ivy-posframe-height 11)
   (ivy-posframe-display-functions-alist '((t . ivy-posframe-display-at-frame-center))))
 
-;; Better experience with icons
-;; Enable it before`ivy-rich-mode' for better performance
-(use-package all-the-icons-ivy-rich
-  :hook (ivy-mode . all-the-icons-ivy-rich-mode)
-  )
+(when (display-graphic-p)
+  ;; Better experience with icons
+  ;; Enable it before`ivy-rich-mode' for better performance
+  (use-package all-the-icons-ivy-rich
+    :hook (ivy-mode . all-the-icons-ivy-rich-mode)
+    )
 
-;; More friendly display transformer for Ivy
-(use-package ivy-rich
-  :hook (;; Must load after `counsel-projectile'
-         (counsel-projectile-mode . ivy-rich-mode)
-         (ivy-rich-mode . (lambda ()
-                            "Use abbreviate in `ivy-rich-mode'."
-                            (setq ivy-virtual-abbreviate
-                                  (or (and ivy-rich-mode 'abbreviate) 'name)))))
-  :init
-  ;; For better performance
-  (setq ivy-rich-parse-remote-buffer nil))
+  ;; More friendly display transformer for Ivy
+  (use-package ivy-rich
+    :hook (;; Must load after `counsel-projectile'
+           (counsel-projectile-mode . ivy-rich-mode)
+           (ivy-rich-mode . (lambda ()
+                              "Use abbreviate in `ivy-rich-mode'."
+                              (setq ivy-virtual-abbreviate
+                                    (or (and ivy-rich-mode 'abbreviate) 'name)))))
+    :init
+    ;; For better performance
+    (setq ivy-rich-parse-remote-buffer nil))
+  )
 
 (provide 'init-ivy)
 

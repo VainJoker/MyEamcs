@@ -90,7 +90,5 @@
       sentence-end-double-space nil)
 
 (show-paren-mode 1)
-
 (set-frame-parameter nil 'alpha 0.8)
 (provide 'init-basic)
-

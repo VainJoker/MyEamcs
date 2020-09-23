@@ -3,7 +3,8 @@
   :ensure nil
   :hook ((after-init . global-hl-line-mode)
          ((dashboard-mode eshell-mode shell-mode term-mode vterm-mode) .
-          (lambda () (setq-local global-hl-line-mode nil)))))
+          (lambda () (setq-local global-hl-line-mode nil))))
+  )
 
 ;; Highlight matching parens
 (use-package paren

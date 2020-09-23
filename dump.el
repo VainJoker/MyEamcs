@@ -5,13 +5,20 @@
 ;; store load-path
 (setq vainjoker-dumped-load-path load-path)
 (dolist (package '(
+                   benchmark-init
                    kaolin-themes
                 ;;doom-themes
                    all-the-icons
                    doom-modeline
                    which-key
                    dashboard
+                   diminish
+                   bind-key
                    dired
+                   treemacs
+                   company
+                   company-box
+                   company-quickhelp
                    posframe
                    yasnippet
                    counsel
@@ -37,6 +44,16 @@
                    help
                    undo-tree
                    winner
+                   bookmark
+                   ibuffer
+                   anzu
+                   drag-stuff
+                   eldoc
+                   so-long
+                   nyan-mode
+                   rainbow-mode
+                   rainbow-delimiters
+                   tooltip
                    ))
   (require package)
   )
