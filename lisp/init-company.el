@@ -1,107 +1,146 @@
-(use-package company 
-  :ensure t 
-  :hook (after-init . global-company-mode) 
-  :defer 2
-  :bind (:map company-active-map
-	      ("M-n" . nil)
-	      ("M-p" . nil)
-	      ("C-n" . #'company-select-next)
-	      ("C-p" . #'company-select-previous))
-  :config
+(use-package company
+  :diminish
+  :defines (company-dabbrev-ignore-case company-dabbrev-downcase)
+  :commands company-cancel
+  :bind (("M-/" . company-complete)
+         ("C-M-i" . company-complete)
+         :map company-mode-map
+         ("<backtab>" . company-yasnippet)
+         :map company-active-map
+         ("C-p" . company-select-previous)
+         ("C-n" . company-select-next)
+         ("<tab>" . company-complete-common-or-cycle)
+         ("<backtab>" . my-company-yasnippet)
+         :map company-search-map
+         ("C-p" . company-select-previous)
+         ("C-n" . company-select-next))
+  :hook (after-init . global-company-mode)
+  :init
   (setq company-tooltip-align-annotations t
-	company-idle-delay 0 company-echo-delay 0
-	company-minimum-prefix-length 1
-	company-require-match nil
-	company-dabbrev-ignore-case nil
-	company-dabbrev-downcase nil
-	company-show-numbers t
-	)
-  (use-package company-lsp
-    :ensure t
-    :defer 2
-    :config
-    (push 'company-lsp company-backends)
-    )
-  (use-package company-tabnine
-    :ensure t
-    :defer 2
-    :after 'company-mode 'company-tabnine-mode
-    :config
-    (add-to-list 'company-backends #'company-tabnine))
-  (use-package company-ctags
-    :ensure t
-    :after company
-    )
-  (use-package company-posframe
-   :ensure t
-    :defer 3
-    :after company
-    :hook (company-mode . company-posframe-mode)
-    )
-  (use-package company-box
-    :ensure t
-    :defer 2
-    :after company
-    :diminish
-    :hook (company-mode . company-box-mode)
-    :init (setq company-box-icons-alist 'company-box-icons-all-the-icons)
-    :config
-    (setq company-box-backends-colors nil)
-    (setq company-box-show-single-candidate t)
-    (setq company-box-doc-delay 2)
-    (defun company-box-icons--elisp (candidate)
-      (when (derived-mode-p 'emacs-lisp-mode)
-	(let ((sym (intern candidate)))
-	  (cond ((fboundp sym) 'Function)
-		((featurep sym) 'Module)
-		((facep sym) 'Color)
-		((boundp sym) 'Variable)
-		((symbolp sym) 'Text)
-		(t . nil)))))
-    (with-eval-after-load 'all-the-icons
-      (declare-function all-the-icons-faicon 'all-the-icons)
-      (declare-function all-the-icons-fileicon 'all-the-icons)
-      (declare-function all-the-icons-material 'all-the-icons)
-      (declare-function all-the-icons-octicon 'all-the-icons)
-      (setq company-box-icons-all-the-icons
-	    `((Unknown . ,(all-the-icons-material "find_in_page" :height 0.7 :v-adjust -0.15))
-	      (Text . ,(all-the-icons-faicon "book" :height 0.68 :v-adjust -0.15))
-	      (Method . ,(all-the-icons-faicon "cube" :height 0.7 :v-adjust -0.05 :face 'font-lock-constant-face))
-	      (Function . ,(all-the-icons-faicon "cube" :height 0.7 :v-adjust -0.05 :face 'font-lock-constant-face))
-	      (Constructor . ,(all-the-icons-faicon "cube" :height 0.7 :v-adjust -0.05 :face 'font-lock-constant-face))
-	      (Field . ,(all-the-icons-faicon "tags" :height 0.65 :v-adjust -0.15 :face 'font-lock-warning-face))
-	      (Variable . ,(all-the-icons-faicon "tag" :height 0.7 :v-adjust -0.05 :face 'font-lock-warning-face))
-	      (Class . ,(all-the-icons-faicon "clone" :height 0.65 :v-adjust 0.01 :face 'font-lock-constant-face))
-	      (Interface . ,(all-the-icons-faicon "clone" :height 0.65 :v-adjust 0.01))
-	      (Module . ,(all-the-icons-octicon "package" :height 0.7 :v-adjust -0.15))
-	      (Property . ,(all-the-icons-octicon "package" :height 0.7 :v-adjust -0.05 :face 'font-lock-warning-face)) ;; Golang module
-	      (Unit . ,(all-the-icons-material "settings_system_daydream" :height 0.7 :v-adjust -0.15))
-	      (Value . ,(all-the-icons-material "format_align_right" :height 0.7 :v-adjust -0.15 :face 'font-lock-constant-face))
-	      (Enum . ,(all-the-icons-material "storage" :height 0.7 :v-adjust -0.15 :face 'all-the-icons-orange))
-	      (Keyword . ,(all-the-icons-material "filter_center_focus" :height 0.7 :v-adjust -0.15))
-	      (Snippet . ,(all-the-icons-faicon "code" :height 0.7 :v-adjust 0.02 :face 'font-lock-variable-name-face))
-	      (Color . ,(all-the-icons-material "palette" :height 0.7 :v-adjust -0.15))
-	      (File . ,(all-the-icons-faicon "file-o" :height 0.7 :v-adjust -0.05))
-	      (Reference . ,(all-the-icons-material "collections_bookmark" :height 0.7 :v-adjust -0.15))
-	      (Folder . ,(all-the-icons-octicon "file-directory" :height 0.7 :v-adjust -0.05))
-	      (EnumMember . ,(all-the-icons-material "format_align_right" :height 0.7 :v-adjust -0.15 :face 'all-the-icons-blueb))
-	      (Constant . ,(all-the-icons-faicon "tag" :height 0.7 :v-adjust -0.05))
-	      (Struct . ,(all-the-icons-faicon "clone" :height 0.65 :v-adjust 0.01 :face 'font-lock-constant-face))
-	      (Event . ,(all-the-icons-faicon "bolt" :height 0.7 :v-adjust -0.05 :face 'all-the-icons-orange))
-	      (Operator . ,(all-the-icons-fileicon "typedoc" :height 0.65 :v-adjust 0.05))
-	      (TypeParameter . ,(all-the-icons-faicon "hashtag" :height 0.65 :v-adjust 0.07 :face 'font-lock-const-face))
-	      (Template . ,(all-the-icons-faicon "code" :height 0.7 :v-adjust 0.02 :face 'font-lock-variable-name-face)))))
-    )
-  (defvar company-mode/enable-yas t "Enable yasnippet for all backends.")
-  (defun company-mode/backend-with-yas (backend)
-    (if (or (not company-mode/enable-yas) (and (listp backend)    (member 'company-yasnippet backend)))
-	backend
-      (append (if (consp backend) backend (list backend))
-	      '(:with company-yasnippet))))
-  (setq company-backends (mapcar #'company-mode/backend-with-yas company-backends))
+        company-tooltip-limit 12
+        company-idle-delay 0
+        company-echo-delay (if (display-graphic-p) nil 0)
+        company-minimum-prefix-length 1
+        company-require-match nil
+        company-dabbrev-ignore-case nil
+        company-dabbrev-downcase nil
+        company-global-modes '(not erc-mode message-mode help-mode
+                                   gud-mode eshell-mode shell-mode)
+        company-backends '((company-capf :with company-yasnippet)
+                           (company-dabbrev-code company-keywords company-files)
+                           company-dabbrev))
 
+  (defun my-company-yasnippet ()
+    "Hide the current completeions and show snippets."
+    (interactive)
+    (company-cancel)
+    (call-interactively 'company-yasnippet))
+  :config
+  ;; `yasnippet' integration
+  (with-no-warnings
+    (with-eval-after-load 'yasnippet
+      (defun company-backend-with-yas (backend)
+        "Add `yasnippet' to company backend."
+        (if (and (listp backend) (member 'company-yasnippet backend))
+            backend
+          (append (if (consp backend) backend (list backend))
+                  '(:with company-yasnippet))))
+
+      (defun my-company-enbale-yas (&rest _)
+        "Enable `yasnippet' in `company'."
+        (setq company-backends (mapcar #'company-backend-with-yas company-backends)))
+
+      (defun my-lsp-fix-company-capf ()
+        "Remove redundant `comapny-capf'."
+        (setq company-backends
+              (remove 'company-backends (remq 'company-capf company-backends))))
+      (advice-add #'lsp-completion--enable :after #'my-lsp-fix-company-capf)
+
+      (defun my-company-yasnippet-disable-inline (fun command &optional arg &rest _ignore)
+        "Enable yasnippet but disable it inline."
+        (if (eq command 'prefix)
+            (when-let ((prefix (funcall fun 'prefix)))
+              (unless (memq (char-before (- (point) (length prefix)))
+                            '(?. ?< ?> ?\( ?\) ?\[ ?{ ?} ?\" ?' ?`))
+                prefix))
+          (progn
+            (when (and (bound-and-true-p lsp-mode)
+                       arg (not (get-text-property 0 'yas-annotation-patch arg)))
+              (let* ((name (get-text-property 0 'yas-annotation arg))
+                     (snip (format "%s (Snippet)" name))
+                     (len (length arg)))
+                (put-text-property 0 len 'yas-annotation snip arg)
+                (put-text-property 0 len 'yas-annotation-patch t arg)))
+            (funcall fun command arg))))
+      (advice-add #'company-yasnippet :around #'my-company-yasnippet-disable-inline)
+      ))
+
+  ;; Better sorting and filtering
+  (use-package company-prescient
+    :init (company-prescient-mode 1))
+
+  )
+;; Icons and quickhelp
+(use-package company-box
+  :diminish
+  :defines company-box-icons-all-the-icons
+  :hook (company-mode . company-box-mode)
+  :init (setq company-box-enable-icon t)
+  :config
+  (with-no-warnings
+    ;; Prettify icons
+    (defun my-company-box-icons--elisp (candidate)
+      (when (derived-mode-p 'emacs-lisp-mode)
+        (let ((sym (intern candidate)))
+          (cond ((fboundp sym) 'Function)
+                ((featurep sym) 'Module)
+                ((facep sym) 'Color)
+                ((boundp sym) 'Variable)
+                ((symbolp sym) 'Text)
+                (t . nil)))))
+    (advice-add #'company-box-icons--elisp :override #'my-company-box-icons--elisp))
+  (declare-function all-the-icons-faicon 'all-the-icons)
+  (declare-function all-the-icons-material 'all-the-icons)
+  (declare-function all-the-icons-octicon 'all-the-icons)
+  (setq company-box-icons-all-the-icons
+        `((Unknown . ,(all-the-icons-material "find_in_page" :height 0.8 :v-adjust -0.15))
+          (Text . ,(all-the-icons-faicon "text-width" :height 0.8 :v-adjust -0.02))
+          (Method . ,(all-the-icons-faicon "cube" :height 0.8 :v-adjust -0.02 :face 'all-the-icons-purple))
+          (Function . ,(all-the-icons-faicon "cube" :height 0.8 :v-adjust -0.02 :face 'all-the-icons-purple))
+          (Constructor . ,(all-the-icons-faicon "cube" :height 0.8 :v-adjust -0.02 :face 'all-the-icons-purple))
+          (Field . ,(all-the-icons-octicon "tag" :height 0.85 :v-adjust 0 :face 'all-the-icons-lblue))
+          (Variable . ,(all-the-icons-octicon "tag" :height 0.85 :v-adjust 0 :face 'all-the-icons-lblue))
+          (Class . ,(all-the-icons-material "settings_input_component" :height 0.8 :v-adjust -0.15 :face 'all-the-icons-orange))
+          (Interface . ,(all-the-icons-material "share" :height 0.8 :v-adjust -0.15 :face 'all-the-icons-lblue))
+          (Module . ,(all-the-icons-material "view_module" :height 0.8 :v-adjust -0.15 :face 'all-the-icons-lblue))
+          (Property . ,(all-the-icons-faicon "wrench" :height 0.8 :v-adjust -0.02))
+          (Unit . ,(all-the-icons-material "settings_system_daydream" :height 0.8 :v-adjust -0.15))
+          (Value . ,(all-the-icons-material "format_align_right" :height 0.8 :v-adjust -0.15 :face 'all-the-icons-lblue))
+          (Enum . ,(all-the-icons-material "storage" :height 0.8 :v-adjust -0.15 :face 'all-the-icons-orange))
+          (Keyword . ,(all-the-icons-material "filter_center_focus" :height 0.8 :v-adjust -0.15))
+          (Snippet . ,(all-the-icons-material "format_align_center" :height 0.8 :v-adjust -0.15))
+          (Color . ,(all-the-icons-material "palette" :height 0.8 :v-adjust -0.15))
+          (File . ,(all-the-icons-faicon "file-o" :height 0.8 :v-adjust -0.02))
+          (Reference . ,(all-the-icons-material "collections_bookmark" :height 0.8 :v-adjust -0.15))
+          (Folder . ,(all-the-icons-faicon "folder-open" :height 0.8 :v-adjust -0.02))
+          (EnumMember . ,(all-the-icons-material "format_align_right" :height 0.8 :v-adjust -0.15))
+          (Constant . ,(all-the-icons-faicon "square-o" :height 0.8 :v-adjust -0.1))
+          (Struct . ,(all-the-icons-material "settings_input_component" :height 0.8 :v-adjust -0.15 :face 'all-the-icons-orange))
+          (Event . ,(all-the-icons-octicon "zap" :height 0.8 :v-adjust 0 :face 'all-the-icons-orange))
+          (Operator . ,(all-the-icons-material "control_point" :height 0.8 :v-adjust -0.15))
+          (TypeParameter . ,(all-the-icons-faicon "arrows" :height 0.8 :v-adjust -0.02))
+          (Template . ,(all-the-icons-material "format_align_left" :height 0.8 :v-adjust -0.15)))
+        company-box-icons-alist 'company-box-icons-all-the-icons)
+  )
+;; Popup documentation for completion candidates
+(when (display-graphic-p)
+  (use-package company-quickhelp
+    :defines company-quickhelp-delay
+    :bind (:map company-active-map
+                ([remap company-show-doc-buffer] . company-quickhelp-manual-begin))
+    :hook (global-company-mode . company-quickhelp-mode)
+    :init (setq company-quickhelp-delay 0.5))
   )
 
 
 (provide 'init-company)
-

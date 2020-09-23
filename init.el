@@ -1,83 +1,133 @@
-(setq user-full-name "VainJoker"
-      user-mail-address "vainjoker@163.com")
-
-(setq package-archives '(("gnu"   . "http://mirrors.tuna.tsinghua.edu.cn/elpa/gnu/")
-			 ("melpa" . "http://mirrors.tuna.tsinghua.edu.cn/elpa/melpa/")))
-
-(unless (package-installed-p 'use-package)
-  (package-refresh-contents)
-  (package-install 'use-package))
-
+(setq custom-file (expand-file-name "custom.el" user-emacs-directory))
 (defvar vainjoker-dumped nil
   "non-nil when a dump file is loaded (because dump.el sets this variable).")
 (defmacro vainjoker-if-dump (then &rest else)
   "Evaluate IF if running with a dump file, else evaluate ELSE."
   (declare (indent 1))
   `(if vainjoker-dumped
-       ,then
+     ,then
      ,@else))
-
 (defun vainjoker-dump ()
   "Dump Emacs."
   (interactive)
   (let ((buf "*dump process*"))
     (make-process
-     :name "dump"
-     :buffer buf
-     :command (list "emacs" "--batch" "-q"
-		    "-l" (expand-file-name "dump.el"
-					   user-emacs-directory)))
+      :name "dump"
+      :buffer buf
+      :command (list "emacs" "--batch" "-q"
+                     "-l" (expand-file-name "dump.el"
+                                            user-emacs-directory)))
     (display-buffer buf)))
-
 (vainjoker-if-dump
-    (progn
-      (setq load-path vainjoker-dumped-load-path)
-      (global-font-lock-mode)
-      (transient-mark-mode)
-      (add-hook 'after-init-hook
-		(lambda ()
-		  (save-excursion
-		    (switch-to-buffer "*scratch*")
-		    (lisp-interaction-mode)))))
+  (progn
+    (setq load-path vainjoker-dumped-load-path)
+    (global-font-lock-mode)
+    (transient-mark-mode)
+    (add-hook 'after-init-hook
+              (lambda ()
+                (save-excursion
+                  (switch-to-buffer "*scratch*")
+                  (lisp-interaction-mode)))))
   ;; add load-path’s and load autoload files
   (package-initialize))
 
-(add-to-list 'load-path "~/.emacs.d/lisp")
-(add-to-list 'load-path "~/.emacs.d/site-lisp")
-(add-to-list 'load-path "~/.emacs.d/var/themes")
+;; Speed up startup
+(defvar vainjoker-gc-cons-threshold (if (display-graphic-p) 16000000 1600000)
+  "The default value to use for `gc-cons-threshold'. If you experience freezing,
+  decrease this. If you experience stuttering, increase this.")
 
+(defvar vainjoker-gc-cons-upper-limit (if (display-graphic-p) 400000000 100000000)
+  "The temporary value for `gc-cons-threshold' to defer it.")
+
+(defvar vainjoker-gc-timer (run-with-idle-timer 10 t #'garbage-collect)
+  "Run garbarge collection when idle 10s.")
+
+(defvar default-file-name-handler-alist file-name-handler-alist)
+
+(setq file-name-handler-alist nil)
+(setq gc-cons-threshold vainjoker-gc-cons-upper-limit
+      gc-cons-percentage 0.5)
+(add-hook 'emacs-startup-hook
+          (lambda ()
+            "Restore defalut values after startup."
+            (setq file-name-handler-alist default-file-name-handler-alist)
+            (setq gc-cons-threshold vainjoker-gc-cons-threshold
+                  gc-cons-percentage 0.1)
+            ;; GC automatically while unfocusing the frame
+            ;; `focus-out-hook' is obsolete since 27.1
+            (if (boundp 'after-focus-change-function)
+              (add-function :after after-focus-change-function
+                            (lambda ()
+                              (unless (frame-focus-state)
+                                (garbage-collect))))
+              (add-hook 'focus-out-hook 'garbage-collect))
+            (defun my-minibuffer-setup-hook ()
+              (setq gc-cons-threshold vainjoker-gc-cons-upper-limit))
+            (defun my-minibuffer-exit-hook ()
+              (setq gc-cons-threshold vainjoker-gc-cons-threshold))
+            (add-hook 'minibuffer-setup-hook #'my-minibuffer-setup-hook)
+            (add-hook 'minibuffer-exit-hook #'my-minibuffer-exit-hook)))
+
+;; Load path
+;; Optimize: Force "lisp"" and "site-lisp" at the head to reduce the startup time.
+(defun update-load-path (&rest _)
+  "Update `load-path'."
+  (dolist (dir '("site-lisp" "lisp"))
+    (push (expand-file-name dir user-emacs-directory) load-path)))
+
+(defun add-subdirs-to-load-path (&rest _)
+  "Add subdirectories to `load-path'."
+  (let ((default-directory (expand-file-name "site-lisp" user-emacs-directory)))
+    (normal-top-level-add-subdirs-to-load-path)))
+
+(advice-add #'package-initialize :after #'update-load-path)
+(advice-add #'package-initialize :after #'add-subdirs-to-load-path)
+
+(update-load-path)
+
+; (add-to-list 'load-path "~/.emacs.d/lisp")
+; (add-to-list 'load-path "~/.emacs.d/site-lisp")
+; (add-to-list 'load-path "~/.emacs.d/var/themes")
+
+;; Packages
+(require 'init-package)
 (require 'init-ui)
-(require 'init-tools)
-(require 'init-evil)
-(require 'init-basic)
-(require 'init-git)
-(require 'init-lsp)
-(require 'init-company)
-(require 'init-prog)
-(require 'init-projectile)
-(require 'init-org)
-(require 'init-tex)
-(require 'init-markdown)
-(require 'init-go)
-(require 'init-c)
-(require 'init-python)
-;; (require 'init-web)
-(require 'init-ivy)
-(require 'init-filemanager)
-(require 'init-eaf)
 (require 'init-keybinds)
-;; (require 'init-mail)
-;; (require 'init-java)
-(custom-set-variables
- ;; custom-set-variables was added by Custom.
- ;; If you edit it by hand, you could mess it up, so be careful.
- ;; Your init file should contain only one such instance.
- ;; If there is more than one, they won't work right.
- '(package-selected-packages
-   '(sis magit-blame youdao-dictionary yasnippet-snippets which-key web-mode wanderlust vue-mode vterm use-package try treemacs-projectile treemacs-persp treemacs-magit treemacs-icons-dired treemacs-evil smartparens smart-input-source scss-mode rime rainbow-mode rainbow-delimiters python-environment python-black ox-reveal ox-pandoc org2ctex org-superstar org-roam org-pomodoro ob-go nyan-mode nlinum-relative neotree multiple-cursors lsp-ui lsp-python-ms lsp-pyright lsp-java kaolin-themes js2-mode ivy-rich ivy-posframe isolate indent-guide hungry-delete graphviz-dot-mode google-translate go-mode general flycheck-posframe flycheck-pos-tip flycheck-popup-tip flx eyebrowse exwm evil-nerd-commenter evil-escape epc emmet-mode editorconfig doom-themes doom-modeline deft dashboard dap-mode counsel-projectile counsel-etags company-web company-tabnine company-posframe company-lsp company-ctags company-box cdlatex ccls cal-china-x benchmark-init auctex amx ag)))
-(custom-set-faces
- ;; custom-set-faces was added by Custom.
- ;; If you edit it by hand, you could mess it up, so be careful.
- ;; Your init file should contain only one such instance.
- ;; If there is more than one, they won't work right.
- '(flycheck-posframe-border-face ((t (:inherit default)))))
+(require 'init-evil)
+(require 'init-filemanager)
+(require 'init-dashboard)
+(require 'init-basic)
+(require 'init-utils)
+(require 'init-ivy)
+
+(require 'init-yasnippet)
+(require 'init-company)
+(require 'init-lsp)
+
+(require 'init-eaf)
+(require 'init-calendar)
+(require 'init-highlight)
+(require 'init-kill-ring)
+
+(require 'init-git)
+(require 'init-window)
+(require 'init-persp)
+
+(require 'init-projectile)
+(require 'init-flycheck)
+(require 'init-prog)
+
+(require 'init-elisp)
+(require 'init-c)
+(require 'init-go)
+(require 'init-rust)
+(require 'init-docker)
+(require 'init-python)
+(require 'init-web)
+(require 'init-tex)
+(require 'init-rust)
+(require 'init-org)
+(require 'init-markdown)
+
+(require 'init-edit)
+(require 'init-ibuffer)

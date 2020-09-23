@@ -77,25 +77,26 @@
    )
 
   (my-leader-def
-   :keymaps 'visual
-   "cc" 'evilnc-comment-or-uncomment-lines
-   "cl" 'evilnc-quick-comment-or-uncomment-to-the-line
-   "ci" 'evilnc-copy-and-comment-lines
-   "cp" 'evilnc-comment-or-uncomment-paragraphs
-   "cr" 'comment-or-uncomment-region
-   "cv" 'evilnc-toggle-invert-comment-line-by-line
-   )
+    :keymaps 'visual
+    "cc" 'evilnc-comment-or-uncomment-lines
+    "cl" 'evilnc-quick-comment-or-uncomment-to-the-line
+    "ci" 'evilnc-copy-and-comment-lines
+    "cp" 'evilnc-comment-or-uncomment-paragraphs
+    "cr" 'comment-or-uncomment-region
+    "cv" 'evilnc-toggle-invert-comment-line-by-line
+    )
 
   ;; ** Mode Keybindings
   (my-local-leader-def
-   :states 'normal
-   :keymaps 'org-mode-map
-   "y" 'org-store-link
-   "p" 'org-insert-link
-   )
+    :states 'normal
+    :keymaps 'org-mode-map
+    "y" 'org-store-link
+    "p" 'org-insert-link
+    )
   ;; * Settings
   ;; change evil's search module after evil has been loaded (`setq' will not work)
   (general-setq evil-search-module 'evil-search)
   )
+
 
 (provide 'init-keybinds)

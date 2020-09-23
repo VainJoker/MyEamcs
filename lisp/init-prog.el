@@ -1,79 +1,79 @@
-(use-package flycheck
-  :defer 2
-  :ensure t
-  ;; :init (global-flycheck-mode 0)
-  :config
-  (which-key-add-key-based-replacements
-    "M-SPC t t" "开关flycheck")
-  ;; 美化一下
-  (when (fboundp 'define-fringe-bitmap)
-    (define-fringe-bitmap 'flycheck-fringe-bitmap-double-arrow
-      [16 48 112 240 112 48 16] nil nil 'center)
+(use-package prog-mode
+  :ensure nil
+  :hook (prog-mode . prettify-symbols-mode)
+  :init
+  (setq prettify-symbols-unprettify-at-point 'right-edge))
 
-    ;; 用GUI tooltips来显示检查到的错误
-    (use-package flycheck-posframe
-      :after flycheck
-      :defer 2
-      :ensure t
-      :custom-face (flycheck-posframe-border-face ((t (:inherit default))))
-      :hook (flycheck-mode . flycheck-posframe-mode)
-      :init (setq flycheck-posframe-border-width 1
-		  flycheck-posframe-inhibit-functions
-		  '((lambda (&rest _) (bound-and-true-p company-backend))))
-      (use-package flycheck-pos-tip
-	:after flycheck
-	:defer 2
-	:ensure t
-	:defines flycheck-pos-tip-timeout
-	:hook (global-flycheck-mode . flycheck-pos-tip-mode)
-	:config (setq flycheck-pos-tip-timeout 30)))
-    (use-package flycheck-popup-tip
-      :after flycheck
-      :ensure t
-      :hook (flycheck-mode . flycheck-popup-tip-mode))
-    )
-  )
+; ;; Jump to definition
+; (use-package dumb-jump
+;   :pretty-hydra
+;   ((:title (pretty-hydra-title "Dump Jump" 'faicon "anchor")
+;     :color blue :quit-key "q")
+;    ("Jump"
+;     (("j" dumb-jump-go "Go")
+;      ("o" dumb-jump-go-other-window "Go other window")
+;      ("e" dumb-jump-go-prefer-external "Go external")
+;      ("x" dumb-jump-go-prefer-external-other-window "Go external other window"))
+;     "Other"
+;     (("i" dumb-jump-go-prompt "Prompt")
+;      ("l" dumb-jump-quick-look "Quick look")
+;      ("b" dumb-jump-back "Back"))))
+;   :bind (("M-g o" . dumb-jump-go-other-window)
+;          ("M-g j" . dumb-jump-go)
+;          ("M-g i" . dumb-jump-go-prompt)
+;          ("M-g x" . dumb-jump-go-prefer-external)
+;          ("M-g z" . dumb-jump-go-prefer-external-other-window)
+;          ("C-M-j" . dumb-jump-hydra/body))
+;   :init
+;   (add-hook 'xref-backend-functions #'dumb-jump-xref-activate)
+;   (setq dumb-jump-prefer-searcher 'rg
+;         dumb-jump-selector 'ivy))
 
-(use-package yasnippet
-  :defer 5
+(use-package editorconfig
+  :diminish
+  :hook (after-init . editorconfig-mode))
+
+;; Run commands quickly
+(use-package quickrun
+  :bind (("C-<f5>" . quickrun)
+         ("C-c x" . quickrun)))
+
+(use-package cask-mode)
+(use-package csharp-mode)
+(use-package csv-mode)
+(use-package julia-mode)
+(use-package lua-mode)
+(use-package mermaid-mode)
+(use-package plantuml-mode)
+(use-package powershell)
+(use-package rmsbolt)                   ; A compiler output viewer
+(use-package scala-mode)
+(use-package swift-mode)
+(use-package vimrc-mode)
+
+(use-package protobuf-mode
+  :hook (protobuf-mode . (lambda ()
+                           (setq imenu-generic-expression
+                                 '((nil "^[[:space:]]*\\(message\\|service\\|enum\\)[[:space:]]+\\([[:alnum:]]+\\)" 2))))))
+
+(use-package nxml-mode
+  :ensure nil
+  :mode (("\\.xaml$" . xml-mode)))
+
+;; New `conf-toml-mode' in Emacs 26
+(unless (fboundp 'conf-toml-mode)
+  (use-package toml-mode))
+
+;; Batch Mode eXtras
+(use-package bmx-mode
   :after company
-  :ensure t
-  :config
-  (yas-reload-all)
-  (add-hook 'prog-mode-hook #'yas-minor-mode)
-  (add-hook 'text-mode-hook #'yas-minor-mode)
-  (setq yas-snippet-dirs
-	'("~/.emacs.d/var/snippets"                 ;; personal snippets
-	  ))
-  (use-package yasnippet-snippets
-    :defer t
-    :ensure t
-    )
-  )
+  :diminish
+  :hook (after-init . bmx-mode-setup-defaults))
 
-;; (setq solidity-solc-path "/bin/solc")
-;; (use-package solidity-mode
-;;   :ensure t
-;;   :config
-;;   (define-key solidity-mode-map (kbd "C-c C-g") 'solidity-estimate-gas-at-point)
-;;   (use-package solidity-flycheck
-;;     :ensure t
-;;     :after solidity-mode
-;;     :config
-;;     (setq solidity-flycheck-solc-checker-active t)
-;;     (setq solidity-flycheck-solium-checker-active t)
-;;     (setq flycheck-solidity-solc-addstd-contracts t)
-;;     )
-;;   (use-package company-solidity
-;;     :ensure t
-;;     :after solidity-mode
-;;     :config
-;;     (add-hook 'solidity-mode-hook
-;; 	      (lambda ()
-;; 		(set (make-local-variable 'company-backends)
-;; 		     (append '((company-solidity company-capf company-dabbrev-code))
-;; 			     company-backends))))
-;;     )
-;;   )
+;; Fish shell
+(use-package fish-mode
+  :hook (fish-mode . (lambda ()
+                       (add-hook 'before-save-hook
+                                 #'fish_indent-before-save))))
+
 (provide 'init-prog)
-

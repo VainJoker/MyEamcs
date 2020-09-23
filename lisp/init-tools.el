@@ -1,17 +1,18 @@
-;; (use-package nlinum
+(use-package nlinum
+  :ensure t
+  :disabled t
+  :config
+  (add-hook 'prog-mode-hook 'nlinum-mode-hook)
+  )
+;; (use-package nlinum-relative
 ;;   :ensure t
 ;;   :config
-;;   (add-hook 'prog-mode-hook 'nlinum-mode-hook)
+;;   (nlinum-relative-setup-evil)                    ;; setup for evil
+;;   (add-hook 'prog-mode-hook 'nlinum-relative-mode)
+;;   (setq nlinum-relative-redisplay-delay 0.25)      ;; delay
+;;   (setq nlinum-relative-current-symbol "▷")      ;; or "" for display current line number
+;;   (setq nlinum-relative-offset 0)                 ;; 1 if you want 0, 2, 3...
 ;;   )
-(use-package nlinum-relative
-  :ensure t
-  :config
-  (nlinum-relative-setup-evil)                    ;; setup for evil
-  (add-hook 'prog-mode-hook 'nlinum-relative-mode)
-  (setq nlinum-relative-redisplay-delay 0.25)      ;; delay
-  (setq nlinum-relative-current-symbol "▷")      ;; or "" for display current line number
-  (setq nlinum-relative-offset 0)                 ;; 1 if you want 0, 2, 3...
-  )
 
 (use-package editorconfig
   :ensure t
@@ -31,12 +32,13 @@
   :ensure t
   :after evil 
   :config
-  (sis-ism-lazyman-config nil nil 'fcitx5)
+  (sis-ism-lazyman-config "1" "2" 'fcitx5)
   (sis-global-inline-mode)
   (sis-global-respect-mode)
   (sis-global-cursor-color-mode)
   (sis-global-follow-context-mode)
   )
+
 
 (use-package multiple-cursors
   :ensure t 
@@ -47,11 +49,6 @@
 ;;   :defer 3
 ;;   :config
 ;;   (eyebrowse-mode 1))
-(use-package hideshow 
-  :defer 2
-  :ensure t 
-  :diminish hs-minor-mode 
-  :hook (prog-mode . hs-minor-mode))
 (use-package ag
   :ensure t
   :defer 3
@@ -96,6 +93,14 @@
 (use-package vterm
   :defer 3
   :ensure t)
+;; (use-package english-teacher
+;;   :load-path "english-teacher-path" ;; NOTE: here type english teacher directory
+;;   :hook ((Info-mode
+;;           elfeed-show-mode
+;;           eww-mode
+;;           Man-mode
+;;           Woman-Mode) . english-teacher-follow-mode)
+;;   )
 (use-package youdao-dictionary
   :defer 2
   :ensure t
@@ -131,89 +136,6 @@
   :config
   (add-hook 'after-init-hook 'benchmark-init/deactivate)
   )
-
-  ;; (sis-ism-lazyman-config
-  ;;  ;; "com.apple.keylayout.ABC"
-  ;;  "com.apple.keylayout.US"
-  ;;  ;; "im.rime.inputmethod.Squirrel.Rime"
-  ;;  "com.sogou.inputmethod.sogou.pinyin")
-  ;; ;; enable the /cursor color/ mode
-  ;; (sis-global-cursor-color-mode t)
-  ;; ;; enable the /respect/ mode
-  ;; (sis-global-respect-mode t)
-  ;; ;; enable the /follow context/ mode for all buffers
-  ;; (sis-global-follow-context-mode t)
-  ;; ;; enable the /inline english/ mode for all buffers
-  ;; (sis-global-inline-mode t)
-
-;; (use-package wanderlust
-;;   :ensure t
-;;   :defer 5
-;;   :init
-;;   (if (boundp 'mail-user-agent)
-;;       (setq mail-user-agent 'wl-user-agent))
-;;   (if (fboundp 'define-mail-user-agent)
-;;       (define-mail-user-agent
-;; 	'wl-user-agent
-;; 	'wl-user-agent-compose
-;; 	'wl-draft-send
-;; 	'wl-draft-kill
-;; 	'mail-send-hook))
-;;   :config
-;;   (setq elmo-imap4-default-server "imap.163.com"
-;;       elmo-imap4-default-user "vainjoker@163.com"
-;;       elmo-imap4-default-authenticate-type 'clear
-;;       elmo-imap4-default-port '993
-;;       elmo-imap4-default-stream-type 'ssl)
-;;   )
-;; (use-package telega
-;;   :ensure t
-;;   :defer 2
-;;   :init (setq telega-proxies)
-;;         '((:server "localhost"))
-;;        :port 1080
-;;        :enable t
-;;        :type (:@type "proxyTypeSocks5")
-;;   (setq telega-chat-fill-column 65)
-;;   (setq telega-emoji-use-images nil)
-;;   :config
-;;   (set-fontset-font t 'unicode (font-spec :family "Symbola") nil 'prepend)
-;;   (with-eval-after-load 'company (add-hook 'telega-chat-mode-hook (lambda ()))
-;;                     (make-local-variable
-;;                      'company-backends)
-;;                     (dolist (it)
-;;                        '(telega-company-botcmd
-;;                          telega-company-emoji)
-;;                       (push it company-backends)))
-;;   (with-eval-after-load 'all-the-icons (add-to-list 'all-the-icons-mode-icon-alist)
-;;                 '(telega-root-mode all-the-icons-fileicon
-;;                        "telegram"
-;;                        :heigt 1.0
-;;                        :v-adjust -0.2
-;;                        :face all-the-icons-yellow)
-;;       (add-to-list 'all-the-icons-mode-icon-alist '(telega-chat-mode)
-;;                       all-the-icons-fileicon
-;;                       "telegram"
-;;                       :heigt 1.0
-;;                       :v-adjust -0.2
-;;                       :face all-the-icons-blue))
-;;   (telega-notifications-mode 1)
-;;   (telega-mode-line-mode 1))
-;; (use-package bongo
-;;   :ensure t
-;;   :defer 2
-;;   :config (defun bongo-init ())
-;;       (interactive)
-;;       (let ((buffer (current-buffer)))
-;;         (bongo)
-;;         (setq bongo-insert-whole-directory-trees "ask")
-;;         (bongo-insert-file "~/Music")
-;;         (bongo-insert-enqueue-region (point-min)
-;;              (point-max))
-;;         (bongo-play-random)
-;;         (switch-to-buffer buffer)))
-
-
 
 (provide 'init-tools)
 

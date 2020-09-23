@@ -1,194 +1,150 @@
+;; Major mode for editing web templates
 (use-package web-mode
+  :mode "\\.\\(phtml\\|php|[gj]sp\\|as[cp]x\\|erb\\|djhtml\\|html?\\|hbs\\|ejs\\|jade\\|swig\\|tm?pl\\|vue\\)$"
+  :config
+  (setq web-mode-markup-indent-offset 2)
+  (setq web-mode-css-indent-offset 2)
+  (setq web-mode-code-indent-offset 2))
+
+
+(use-package typescript-mode
   :defer 2
   :ensure t
-  :mode (
-	 ("\\.phtml\\'" . web-mode)
-	 ("\\.tpl\\.php\\'" . web-mode)
-	 ("\\.[agj]sp\\'" . web-mode) 
-	 ("\\.as[cp]x\\'" . web-mode) 
-	 ("\\.erb\\'" . web-mode)
-	 ("\\.djhtml\\'" . web-mode)
-	 ("\\.hbs\\'" . web-mode)   
-))
+  :mode "\\.ts\\'"
+  :commands (typescript-mode)
+  :config
+  (setq typescript-indent-level 2)
+  (add-hook 'typescript-mode-hook 'web-dev-attached)
+  )
+
+(use-package tide
+  :after (typescript-mode company flycheck)
+  :hook ((typescript-mode . tide-setup)
+         (typescript-mode . tide-hl-identifier-mode)
+         (before-save . tide-format-before-save))
+  :config
+  (defun setup-tide-mode ()
+    (interactive)
+    (tide-setup)
+    (flycheck-mode +1)
+    (eldoc-mode +1)
+    (tide-hl-identifier-mode +1)
+    (company-mode +1)
+    (company-box-mode +1)
+    )
+  (setq company-tooltip-align-annotations t)
+  (add-hook 'typescript-mode-hook #'setup-tide-mode)
+  (add-hook 'js2-mode-hook #'setup-tide-mode)
+  (flycheck-add-next-checker 'javascript-eslint 'javascript-tide 'append)
+  )
+
+
+;; Format HTML, CSS and JavaScript/JSON
+;; Install: npm -g install prettier
+(use-package prettier-js
+  :diminish
+  :hook ((js-mode js2-mode json-mode web-mode css-mode sgml-mode html-mode)
+         .
+         prettier-js-mode))
+
+(use-package haml-mode)
+(use-package php-mode)
+
+
+;; REST
+(use-package restclient
+  :mode ("\\.http\\'" . restclient-mode)
+  :config
+  (use-package restclient-test
+    :diminish
+    :hook (restclient-mode . restclient-test-mode))
+
+  (with-eval-after-load 'company
+    (use-package company-restclient
+      :defines company-backends
+      :init (add-to-list 'company-backends 'company-restclient))))
+
+(use-package emmet-mode
+  :init (setq emmet-expand-jsx-className? t)
+  :hook (web-mode vue-mode typescript-mode js-mode)
+  )
+;; (use-package zencoding-mode
+;;   :ensure t
+;;   :config
+;;   (add-hook 'web-mode-hook 'zencoding-mode)
+;;   )
 
 (use-package css-mode
   :defer 2
   :ensure t
-  :mode (
-	 ("\\.css\\'" . css-mode)
-	 )
+  :mode "\\.css\\'"
+  :config
+  (add-hook 'css-mode-hook (lambda()
+                             (add-to-list (make-local-variable 'company-backends)
+                                          '(company-css company-files company-yasnippet company-capf))))
+
+  (setq css-indent-offset 2)
+  (setq flycheck-stylelintrc "~/.stylelintrc")
   )
- 
 
 (use-package scss-mode
   :defer 2
   :ensure t
+  :mode "\\.scss\\'"
   )
 
+(use-package css-eldoc
+  :commands turn-on-css-eldoc
+  :hook ((css-mode scss-mode less-css-mode) . turn-on-css-eldoc))
+
+;; JSON mode
+(use-package json-mode)
+
+;; JavaScript
 (use-package js2-mode
-  :defer 2
-  :ensure t
+  :defines flycheck-javascript-eslint-executable
+  :mode (("\\.js\\'" . js2-mode)
+         ("\\.jsx\\'" . js2-jsx-mode))
+  :interpreter (("node" . js2-mode)
+                ("node" . js2-jsx-mode))
+  :hook ((js2-mode . js2-imenu-extras-mode)
+         (js2-mode . js2-highlight-unused-variables-mode))
+  :config
+  (with-eval-after-load 'flycheck
+    (when (or (executable-find "eslint_d")
+              (executable-find "eslint")
+              (executable-find "jshint"))
+      (setq js2-mode-show-strict-warnings nil))
+    (when (executable-find "eslint_d")
+      ;; https://github.com/mantoni/eslint_d.js
+      ;; npm -i -g eslint_d
+      (setq flycheck-javascript-eslint-executable "eslint_d")))
+
+  (use-package js2-refactor
+    :diminish
+    :hook (js2-mode . js2-refactor-mode)
+    :config (js2r-add-keybindings-with-prefix "C-c C-m")))
+
+
+(defun web-refreash()
+  (interactive)
+  (progn
+    (save-buffer)
+    (other-window 1)
+    (eaf-proxy-insert_or_refresh_page)
+    )
+  )
+(defun web-open()
+  (interactive)
+  (progn
+    (split-window-horizontally)
+    (other-window 1)
+    (eaf-open-browser (concat "file://" buffer-file-name))
+    (save-buffer)
+    )
   )
 
-(use-package vue-mode
-  :defer 2
-  :ensure t
-  :mode (
-	 ("\\.vue\\'" . vue-mode)
-	 ))
+(add-hook 'web-mode-hook '(lambda() (local-set-key (kbd "C-c C-p") 'web-refreash)))
+(add-hook 'web-mode-hook '(lambda() (local-set-key (kbd "C-c C-z") 'web-open)))
 
-(use-package emmet-mode
-  :defer 2
-  :ensure t
-  )
-
-(use-package company-web
-  :defer 2
-  :ensure t
-  )
-
-;;; Colourise CSS colour literals
-; (when (maybe-require-package 'rainbow-mode)
-;   (dolist (hook '(css-mode-hook html-mode-hook sass-mode-hook))
-;     (add-hook hook 'rainbow-mode)))
-; ;;; Embedding in html
-; (require-package 'mmm-mode)
-; (after-load 'mmm-vars
-;   (mmm-add-group
-;    'html-css
-;    '((css-cdata
-;       :submode css-mode
-;       :face mmm-code-submode-face
-;       :front "<style[^>]*>[ \t\n]*\\(//\\)?<!\\[CDATA\\[[ \t]*\n?"
-;       :back "[ \t]*\\(//\\)?]]>[ \t\n]*</style>"
-;       :insert ((?c css-tag nil @ "<style type=\"text/css\">"
-;                    @ "\n" _ "\n" @ "</style>" @)))
-;      (css
-;       :submode css-mode
-;       :face mmm-code-submode-face
-;       :front "<style[^>]*>[ \t]*\n?"
-;       :back "[ \t]*</style>"
-;       :insert ((?c css-tag nil @ "<style type=\"text/css\">"
-;                    @ "\n" _ "\n" @ "</style>" @)))
-;      (css-inline
-;       :submode css-mode
-;       :face mmm-code-submode-face
-;       :front "style=\""
-;       :back "\"")))
-;   (dolist (mode (list 'html-mode 'nxml-mode))
-;     (mmm-add-mode-ext-class mode "\\.r?html\\(\\.erb\\)?\\'" 'html-css)))
-; ;;; SASS and SCSS
-; (require-package 'sass-mode)
-; (unless (fboundp 'scss-mode)
-;   ;; Prefer the scss-mode built into Emacs
-;   (require-package 'scss-mode))
-; (setq-default scss-compile-at-save nil)
-; ;;; LESS
-; (unless (fboundp 'less-css-mode)
-;   ;; Prefer the scss-mode built into Emacs
-;   (require-package 'less-css-mode))
-; (when (maybe-require-package 'skewer-less)
-;   (add-hook 'less-css-mode-hook 'skewer-less-mode))
-; ;; Skewer CSS
-; (when (maybe-require-package 'skewer-mode)
-;   (add-hook 'css-mode-hook 'skewer-css-mode))
-; ;;; Use eldoc for syntax hints
-; (require-package 'css-eldoc)
-; (autoload 'turn-on-css-eldoc "css-eldoc")
-; (add-hook 'css-mode-hook 'turn-on-css-eldoc)
-;
-
-; (maybe-require-package 'json-mode)
-; (maybe-require-package 'js2-mode)
-; (maybe-require-package 'coffee-mode)
-; (maybe-require-package 'typescript-mode)
-; (maybe-require-package 'prettier-js)
-;
-; ;; Need to first remove from list if present, since elpa adds entries too, which
-; ;; may be in an arbitrary order
-;
-; (add-to-list 'auto-mode-alist '("\\.\\(js\\|es6\\)\\(\\.erb\\)?\\'" . js2-mode))
-;
-; ;; js2-mode
-;
-; ;; Change some defaults: customize them to override
-; (setq-default js2-bounce-indent-p nil)
-; (after-load 'js2-mode
-;   ;; Disable js2 mode's syntax error highlighting by default...
-;   (setq-default js2-mode-show-parse-errors nil
-;                 js2-mode-show-strict-warnings nil)
-;   ;; ... but enable it if flycheck can't handle javascript
-;   (autoload 'flycheck-get-checker-for-buffer "flycheck")
-;   (defun sanityinc/enable-js2-checks-if-flycheck-inactive ()
-;     (unless (flycheck-get-checker-for-buffer)
-;       (setq-local js2-mode-show-parse-errors t)
-;       (setq-local js2-mode-show-strict-warnings t)))
-;   (add-hook 'js2-mode-hook 'sanityinc/enable-js2-checks-if-flycheck-inactive)
-;
-;   (add-hook 'js2-mode-hook (lambda () (setq mode-name "JS2")))
-;
-;   (js2-imenu-extras-setup))
-;
-; (setq-default js-indent-level 2)
-; ;; In Emacs >= 25, the following is an alias for js-indent-level anyway
-; (setq-default js2-basic-offset 2)
-;
-;
-; (add-to-list 'interpreter-mode-alist (cons "node" 'js2-mode))
-;
-; 
-;
-; (when (and (executable-find "ag")
-;            (maybe-require-package 'xref-js2))
-;   (after-load 'js2-mode
-;     (define-key js2-mode-map (kbd "M-.") nil)
-;     (add-hook 'js2-mode-hook
-;               (lambda () (add-hook 'xref-backend-functions #'xref-js2-xref-backend nil t)))))
-;
-;
-; 
-; ;;; Coffeescript
-;
-; (after-load 'coffee-mode
-;   (setq-default coffee-js-mode 'js2-mode
-;                 coffee-tab-width js-indent-level))
-;
-; (when (fboundp 'coffee-mode)
-;   (add-to-list 'auto-mode-alist '("\\.coffee\\.erb\\'" . coffee-mode)))
-;
-; ;; ---------------------------------------------------------------------------
-; ;; Run and interact with an inferior JS via js-comint.el
-; ;; ---------------------------------------------------------------------------
-;
-; (when (maybe-require-package 'js-comint)
-;   (setq js-comint-program-command "node")
-;
-;   (defvar inferior-js-minor-mode-map (make-sparse-keymap))
-;   (define-key inferior-js-minor-mode-map "\C-x\C-e" 'js-send-last-sexp)
-;   (define-key inferior-js-minor-mode-map "\C-cb" 'js-send-buffer)
-;
-;   (define-minor-mode inferior-js-keys-mode
-;     "Bindings for communicating with an inferior js interpreter."
-;     nil " InfJS" inferior-js-minor-mode-map)
-;
-;   (dolist (hook '(js2-mode-hook js-mode-hook))
-;     (add-hook hook 'inferior-js-keys-mode)))
-;
-; ;; ---------------------------------------------------------------------------
-; ;; Alternatively, use skewer-mode
-; ;; ---------------------------------------------------------------------------
-;
-; (when (maybe-require-package 'skewer-mode)
-;   (after-load 'skewer-mode
-;     (add-hook 'skewer-mode-hook
-;               (lambda () (inferior-js-keys-mode -1)))))
-;
-;
-; 
-; (when (maybe-require-package 'add-node-modules-path)
-;   (after-load 'typescript-mode
-;     (add-hook 'typescript-mode-hook 'add-node-modules-path))
-;   (after-load 'js2-mode
-;     (add-hook 'js2-mode-hook 'add-node-modules-path)))
-;
 (provide 'init-web)

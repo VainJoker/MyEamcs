@@ -1,6 +1,7 @@
 # -*- mode: snippet -*-
 # contributor : Jimmy Wu <frozenthrone88@gmail.com>
 # name: bootstrap
+# key: bootstrap
 # --
 <!DOCTYPE html>
 <html>

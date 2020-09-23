@@ -1,26 +1,28 @@
-;;; init-projectile.el --- Use Projectile for navigation within projects -*- lexical-binding: t -*-
-;;; Commentary:
-;;; Code:
-
+;; Manage and navigate projects
 (use-package projectile
-  :ensure t
-  :defer 2
+  :diminish
+  :bind (:map projectile-mode-map
+         ("s-t" . projectile-find-file) ; `cmd-t' or `super-t'
+         ("C-c p" . projectile-command-map))
+  :hook (after-init . projectile-mode)
+  :init
+  (setq projectile-mode-line-prefix ""
+        projectile-sort-order 'recentf
+        projectile-use-git-grep t)
   :config
-  ;; (define-key projectile-mode-map (kbd "s-p") 'projectile-command-map)
-  ;; (define-key projectile-mode-map (kbd "C-c p") 'projectile-command-map)
-  (projectile-mode 1)
-  )
-; (when (maybe-require-package 'projectile)
-;   (add-hook 'after-init-hook 'projectile-mode)
-;
-;   ;; Shorter modeline
-;   (setq-default projectile-mode-line-prefix " Proj")
-;
-;   (after-load 'projectile
-;     (define-key projectile-mode-map (kbd "C-c p") 'projectile-command-map))
-;
-;   (maybe-require-package 'ibuffer-projectile))
+  ;; (projectile-update-mode-line)         ; Update mode-line at the first time
 
+  ;; Use the faster searcher to handle project files: ripgrep `rg'.
+  (when (and (not (executable-find "fd"))
+             (executable-find "rg"))
+    (setq projectile-generic-command
+          (let ((rg-cmd ""))
+            (dolist (dir projectile-globally-ignored-directories)
+              (setq rg-cmd (format "%s --glob '!%s'" rg-cmd dir)))
+            (concat "rg -0 --files --color=never --hidden" rg-cmd))))
+
+
+    ;; FIXME: too slow while getting submodule files on Windows
+    (setq projectile-git-submodule-command nil))
 
 (provide 'init-projectile)
-;;; init-projectile.el ends here

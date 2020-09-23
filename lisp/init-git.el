@@ -1,6 +1,5 @@
-(use-package magit
-  :ensure t
-  )
+(use-package magit)
+(provide 'init-git)
   ;; :commands magit-get-top-dir
   ;; ;; :bind (("C-c g" . magit-status)
   ;; ;;        ("C-c C-g l" . magit-file-log)
@@ -82,5 +81,3 @@
   ;;    magit-set-upstream-on-push 'askifnotset
   ;;    ))
   ;; )
-
-(provide 'init-git)

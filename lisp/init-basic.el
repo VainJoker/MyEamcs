@@ -1,110 +1,96 @@
-(setq split-width-threshold 0)
-(setq split-height-threshold nil)
-;; 设置最近打开文件缓存的路径
-(setq recentf-save-file "~/.emacs.d/var/recentf")
-;; 设置书签文件路径
-(setq bookmark-default-file "~/.emacs.d/var/bookmarks")
-;; 设置自动保存路径
-(setq auto-save-list-file-prefix "~/.emacs.d/var/auto-save-list/.saves-")
-;; 设置amx保存文件的路径
-(setq amx-save-file "~/.emacs.d/var/amx-items")
-;; 设置eshell历史记录
-(setq eshell-history-file-name "~/.emacs.d/var/eshell/history")
-;; 高亮括号
+;; Personal information
+(setq user-full-name "VainJoker"
+      user-mail-address "vainjoker@163.com")
+
+;; History
+(use-package saveplace
+             :ensure nil
+             :hook (after-init . save-place-mode))
+
+(use-package recentf
+             :ensure nil
+             :bind (("C-x C-r" . recentf-open-files))
+             :hook (after-init . recentf-mode)
+             :init (setq recentf-max-saved-items 300
+                         recentf-exclude
+                         '("\\.?cache" ".cask" "url" "COMMIT_EDITMSG\\'" "bookmarks"
+                           "\\.\\(?:gz\\|gif\\|svg\\|png\\|jpe?g\\|bmp\\|xpm\\)$"
+                           "\\.?ido\\.last$" "\\.revive$" "/G?TAGS$" "/.elfeed/"
+                           "^/tmp/" "^/var/folders/.+$" ; "^/ssh:"
+                           (lambda (file) (file-in-directory-p file package-user-dir))))
+             :config (push (expand-file-name recentf-save-file) recentf-exclude))
+
+(use-package savehist
+             :ensure nil
+             :hook (after-init . savehist-mode)
+             :init (setq enable-recursive-minibuffers t ; Allow commands in minibuffers
+                         history-length 1000
+                         savehist-additional-variables '(mark-ring
+                                                          global-mark-ring
+                                                          search-ring
+                                                          regexp-search-ring
+                                                          extended-command-history)
+                         savehist-autosave-interval 300))
+
+(use-package simple
+             :ensure nil
+             :hook ((after-init . size-indication-mode)
+                    (text-mode . visual-line-mode)
+                    ((prog-mode markdown-mode conf-mode) . enable-trailing-whitespace))
+             :init
+             (setq column-number-mode t
+                   line-number-mode t
+                   ;; kill-whole-line t               ; Kill line including '\n'
+                   line-move-visual nil
+                   track-eol t                     ; Keep cursor at end of lines. Require line-move-visual is nil.
+                   set-mark-command-repeat-pop t)  ; Repeating C-SPC after popping mark pops it again
+
+             ;; Visualize TAB, (HARD) SPACE, NEWLINE
+             (setq-default show-trailing-whitespace nil) ; Don't show trailing whitespace by default
+             (defun enable-trailing-whitespace ()
+               "Show trailing spaces and delete on saving."
+               (setq show-trailing-whitespace t)
+               (add-hook 'before-save-hook #'delete-trailing-whitespace nil t)))
+
+(use-package time
+             :ensure nil
+             :unless (display-graphic-p)
+             :hook (after-init . display-time-mode)
+             :init (setq display-time-24hr-format t
+                         display-time-day-and-date t))
+
+(use-package so-long
+             :ensure nil
+             :hook (after-init . global-so-long-mode)
+             :config (setq so-long-threshold 400))
+
+;; Mouse & Smooth Scroll
+;; Scroll one line at a time (less "jumpy" than defaults)
+(when (display-graphic-p)
+  (setq mouse-wheel-scroll-amount '(1 ((shift) . 1))
+        mouse-wheel-progressive-speed nil))
+(setq scroll-step 1
+      scroll-margin 0
+      scroll-conservatively 100000)
+;;(setq auto-window-vscroll nil)
+
+(setq-default major-mode 'text-mode
+              fill-column 80
+              tab-width 4
+              indent-tabs-mode nil)     ; Permanently indent with spaces, never with TABs
+(setq visible-bell t
+      inhibit-compacting-font-caches t  ; Don’t compact font caches during GC.
+      delete-by-moving-to-trash t       ; Deleting files go to OS's trash folder
+      make-backup-files nil             ; Forbide to make backup files
+      auto-save-default nil             ; Disable auto save
+      uniquify-buffer-name-style 'post-forward-angle-brackets ; Show path if names are same
+      adaptive-fill-regexp "[ t]+|[ t]*([0-9]+.|*+)[ t]*"
+      adaptive-fill-first-line-regexp "^* *$"
+      sentence-end "\\([。！？]\\|……\\|[.?!][]\"')}]*\\($\\|[ \t]\\)\\)[ \t\n]*"
+      sentence-end-double-space nil)
+
 (show-paren-mode 1)
-;; 自动折行
-(toggle-truncate-lines t)
-;; 设置背景透明
+
 (set-frame-parameter nil 'alpha 0.8)
-;; 窗口重绘
-(setq auto-window-vscroll nil)
-(use-package which-key
-  :ensure t
-  :custom
-  (which-key-popup-type 'side-window)
-  :config
-  (which-key-mode))
-
-(use-package ace-window
-  :ensure t
-  :defer 2
-  :init
-  (progn
-    (global-set-key [remap other-window] 'ace-window)
-    ))
-
-(use-package swiper
-  :ensure t
-  :bind
-  (("C-s" . swiper)
-   ("C-r" . swiper)
-   ;; ("C-c C-r" . ivy-resume)
-   ("M-x" . counsel-M-x)
-   ("C-x C-f" . counsel-find-file))
-  :config
-  (progn
-    (ivy-mode 1)
-    (setq ivy-use-virtual-buffers t)
-    (setq ivy-display-style 'fancy)
-    (define-key read-expression-map (kbd "C-r") 'counsel-expression-history))
-  )
-
-(use-package counsel
-  :ensure t
-  :bind
-  (("C-x C-r" . 'counsel-recentf)
-   ("C-x d" . 'counsel-dired))
-  )
-
-(use-package avy
-  :ensure t
-  :bind (("M-g :" . 'avy-goto-char)
-	 ("M-g '" . 'avy-goto-char-2)
-	 ("M-g \"" . 'avy-goto-char-timer)
-	 ("M-g f" . 'avy-goto-line)
-	 ("M-g w" . 'avy-goto-word-1)
-	 ("M-g e" . 'avy-goto-word-0))
-  )
-
-(use-package hungry-delete
-  :ensure t
-  :defer 2
-  :hook ('prog-mode . 'global-hungry-delete-mode)
-  )
-
-
-;; (use-package rime
-;;   :defer 2
-;;   :ensure t
-;;   :config
-;;   (setq rime-user-data-dir "~/.config/fcitx/rime")
-;;   (setq default-input-method "rime"
-;;         rime-show-candidate 'posframe)
-;;   (setq rime-posframe-properties
-;; 	(list :background-color "#333333"
-;;               :foreground-color "#dcdccc"
-;;               :font "WenQuanYi Micro Hei Mono-14"
-;;               :internal-border-width 10))
-;;   (setq rime-disable-predicates
-;;       '(rime-predicate-evil-mode-p
-;;         rime-predicate-after-alphabet-char-p
-;;         rime-predicate-prog-in-code-p))
-;;   :bind
-;;   ("M-n" . 'rime-force-enable)
-;;   )
-
-
-(use-package helpful
-  :ensure t 
-  :defer 2
-  :config
-  (global-set-key (kbd "C-h f") #'helpful-callable)
-  (global-set-key (kbd "C-h v") #'helpful-variable)
-  (global-set-key (kbd "C-h k") #'helpful-key)
-  (global-set-key (kbd "C-c C-d") #'helpful-at-point)
-  (global-set-key (kbd "C-h F") #'helpful-function)
-  (global-set-key (kbd "C-h C") #'helpful-command)
-  )
-
-
 (provide 'init-basic)
+
