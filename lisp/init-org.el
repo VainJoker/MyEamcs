@@ -29,7 +29,7 @@
         org-log-done 'time
         org-catch-invisible-edits 'smart
         org-startup-indented t
-        org-ellipsis (if (char-displayable-p ?⏷) "\t⏷" nil)
+        ;; org-ellipsis (if (char-displayable-p ?⏷) "\t⏷" nil)
         org-pretty-entities nil
         org-hide-emphasis-markers t)
 
@@ -37,7 +37,7 @@
   (setq org-directory "~/org/")
   (setq org-agenda-files '("~/org/gtd"))
   (set-language-environment "UTF-8")
-  (setq org-todo-keywords '((sequence "TODO(t)" "DOING(i)" "HANGUP(h)" "|" "DONE(d)" "CANCEL(c)")(sequence "⚑(T)" "🏴(I)" "❓(H)" "|" "✔(D)" "✘(C)")))
+  (setq org-todo-keywords '((sequence "TODO(t)" "DOING(i)" "HANGUP(h)" "|" "DONE(d)" "CANCEL(c)")(sequence "⚑(T)" "🏴(I)" "(H)" "|" "✔(D)" "✘(C)")))
   (setq org-todo-keyword-faces '(
                                  ("DOING" . "pink")
                                  ("DONE"  . "orange")

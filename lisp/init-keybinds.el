@@ -22,6 +22,7 @@
     ;; bind "SPC a"
     "TAB" 'hs-toggle-hiding
     "."  'compile
+    "bg" 'bongo
     "ca" 'counsel-ag
     "cf" 'counsel-fzf
     "cc" 'evilnc-comment-or-uncomment-lines
@@ -39,6 +40,7 @@
     "eh" 'eaf-open-browser-with-history
     "em" 'eaf-open-mindmap
     "et" 'eaf-open-terminal
+    "lu" 'lsp-ui-menu
     "oa" 'org-agenda
     "oc" 'org-capture
     "oo" 'VainJoker/open-gtd-file
@@ -46,6 +48,9 @@
     "op" 'org-pomodoro'
     "ou" 'org-priority-up
     "od" 'org-priority-down
+    "oy" 'org-store-link
+    "oi" 'org-insert-link
+    "po" 'pomidor
     "vc" 'calendar
     "bb" 'switch-to-buffer
     "bk" 'kill-this-buffer
@@ -58,11 +63,9 @@
     "wL" 'windmove-swap-states-down
     "wv" 'evil-window-vsplit
     "mc" 'calendar
-    "mt" 'vterm-other-window
     "mz" 'load-theme
-    "me" 'neotree-toggle
     "mf" 'flycheck-mode
-    "ql" 'desktop-read
+    "mt" 'vterm-toggle
     "tt" 'youdao-dictionary-search-at-point-posframe
     "ti" 'youdao-dictionary-search-from-input
     "tv" 'youdao-dictionary-play-voice-at-point
@@ -73,7 +76,7 @@
     "D" 'deft
     "G" 'magit-status
     "P" 'projectile-command-map
-    "T" 'random-color-theme
+    ;; "T" 'random-color-theme
     )
 
   (my-leader-def
@@ -87,12 +90,12 @@
     )
 
   ;; ** Mode Keybindings
-  (my-local-leader-def
-    :states 'normal
-    :keymaps 'org-mode-map
-    "y" 'org-store-link
-    "p" 'org-insert-link
-    )
+  ;; (my-local-leader-def
+  ;;   :states 'normal
+  ;;   :keymaps 'org-mode-map
+  ;;   "y" 'org-store-link
+  ;;   "p" 'org-insert-link
+  ;;   )
   ;; * Settings
   ;; change evil's search module after evil has been loaded (`setq' will not work)
   (general-setq evil-search-module 'evil-search)

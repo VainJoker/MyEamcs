@@ -10,6 +10,7 @@
                 ;;doom-themes
                    all-the-icons
                    doom-modeline
+                   display-line-numbers
                    which-key
                    dashboard
                    diminish
@@ -19,6 +20,7 @@
                    company
                    company-box
                    company-quickhelp
+                   company-prescient
                    posframe
                    yasnippet
                    counsel
@@ -42,10 +44,10 @@
                    ediff
                    expand-region
                    help
+                   helpful
                    undo-tree
                    winner
                    bookmark
-                   ibuffer
                    anzu
                    drag-stuff
                    eldoc

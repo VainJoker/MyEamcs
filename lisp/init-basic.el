@@ -2,6 +2,21 @@
 (setq user-full-name "VainJoker"
       user-mail-address "vainjoker@163.com")
 
+;; linenumber
+(use-package display-line-numbers
+  :ensure nil
+  :hook
+  (prog-mode . display-line-numbers-mode)
+  :config
+  (setq display-line-numbers-type 'relative)
+  (defun buffer-too-big-p ()
+    (or (> (buffer-size) (* 5000 80))
+        (> (line-number-at-pos (point-max)) 5000)))
+  (add-hook 'prog-mode-hook
+            (lambda ()
+              (if (buffer-too-big-p) (display-line-numbers-mode -1))))
+  )
+
 ;; History
 (use-package saveplace
              :ensure nil
@@ -32,25 +47,25 @@
                                                           extended-command-history)
                          savehist-autosave-interval 300))
 
-(use-package simple
-             :ensure nil
-             :hook ((after-init . size-indication-mode)
-                    (text-mode . visual-line-mode)
-                    ((prog-mode markdown-mode conf-mode) . enable-trailing-whitespace))
-             :init
-             (setq column-number-mode t
-                   line-number-mode t
-                   ;; kill-whole-line t               ; Kill line including '\n'
-                   line-move-visual nil
-                   track-eol t                     ; Keep cursor at end of lines. Require line-move-visual is nil.
-                   set-mark-command-repeat-pop t)  ; Repeating C-SPC after popping mark pops it again
+;; (use-package simple
+;;              :ensure nil
+;;              :hook ((after-init . size-indication-mode)
+;;                     (text-mode . visual-line-mode)
+;;                     ((prog-mode markdown-mode conf-mode) . enable-trailing-whitespace))
+;;              :init
+;;              (setq column-number-mode t
+;;                    line-number-mode t
+;;                    ;; kill-whole-line t               ; Kill line including '\n'
+;;                    line-move-visual nil
+;;                    track-eol t                     ; Keep cursor at end of lines. Require line-move-visual is nil.
+;;                    set-mark-command-repeat-pop t)  ; Repeating C-SPC after popping mark pops it again
 
-             ;; Visualize TAB, (HARD) SPACE, NEWLINE
-             (setq-default show-trailing-whitespace nil) ; Don't show trailing whitespace by default
-             (defun enable-trailing-whitespace ()
-               "Show trailing spaces and delete on saving."
-               (setq show-trailing-whitespace t)
-               (add-hook 'before-save-hook #'delete-trailing-whitespace nil t)))
+;;              ;; Visualize TAB, (HARD) SPACE, NEWLINE
+;;              (setq-default show-trailing-whitespace nil) ; Don't show trailing whitespace by default
+;;              (defun enable-trailing-whitespace ()
+;;                "Show trailing spaces and delete on saving."
+;;                (setq show-trailing-whitespace t)
+;;                (add-hook 'before-save-hook #'delete-trailing-whitespace nil t)))
 
 (use-package time
              :ensure nil

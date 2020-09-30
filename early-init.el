@@ -11,7 +11,6 @@
 (push '(vertical-scroll-bars) default-frame-alist)
 (when (featurep 'ns)
   (push '(ns-transparent-titlebar . t) default-frame-alist))
-
 (fset 'yes-or-no-p 'y-or-n-p)
 ;; 关闭GUI功能
 (setq use-file-dialog nil use-dialog-box nil inhibit-startup-screen t inhibit-startup-message t)

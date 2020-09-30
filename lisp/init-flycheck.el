@@ -1,7 +1,7 @@
 (use-package flycheck
   :diminish
   :commands flycheck-redefine-standard-error-levels
-  :hook (after-init . global-flycheck-mode)
+  ;; :hook (after-init . global-flycheck-mode)
   :init (setq flycheck-global-modes
               '(not text-mode outline-mode fundamental-mode lisp-interaction-mode
                     org-mode diff-mode shell-mode eshell-mode term-mode vterm-mode)
@@ -17,7 +17,6 @@
     (define-fringe-bitmap 'flycheck-fringe-bitmap-arrow
       [16 48 112 240 112 48 16] nil nil 'center))
   (flycheck-redefine-standard-error-levels "⏴" 'flycheck-fringe-bitmap-arrow)
-
   ;; Display Flycheck errors in GUI tooltips
   (if (display-graphic-p)
           (use-package flycheck-posframe
@@ -29,7 +28,9 @@
           :hook (global-flycheck-mode . flycheck-pos-tip-mode)
           :config (setq flycheck-pos-tip-timeout 30)))
     (use-package flycheck-popup-tip
-      :hook (flycheck-mode . flycheck-popup-tip-mode))))
-
+      :hook (flycheck-mode . flycheck-popup-tip-mode))
+    )
+  )
 (provide 'init-flycheck)
+
 

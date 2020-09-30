@@ -130,6 +130,7 @@
 (require 'init-projectile)
 (require 'init-flycheck)
 (require 'init-prog)
+(require 'init-termshell)
 
 (require 'init-elisp)
 (require 'init-c)
@@ -144,7 +145,6 @@
 (require 'init-markdown)
 
 (require 'init-edit)
-(require 'init-ibuffer)
 (require 'init-language)
 
 (add-hook 'emacs-startup-hook

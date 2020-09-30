@@ -1,11 +1,11 @@
-(setq gnus-secondary-select-methods '((nnml ""))) 
+(setq gnus-secondary-select-methods '((nnml "")))
 (setq gnus-select-method
       '(nnimap "163.com"
-	       (nnimap-address "imap.163.com")
-	       (nnimap-inbox "INBOX")
-	       (nnimap-expunge t)
-	       (nnimap-server-port 993)
-	       (nnimap-stream ssl)))
+               (nnimap-address "imap.163.com")
+               (nnimap-inbox "INBOX")
+               (nnimap-expunge t)
+               (nnimap-server-port 993)
+               (nnimap-stream ssl)))
 
 (setq send-mail-function 'smtpmail-send-it
       smtpmail-smtp-server "smtp.163.com"
@@ -13,27 +13,26 @@
       smtpmail-stream-type 'ssl
       gnus-ignored-newsgroups "^to\\.\\|^[0-9. ]+\\( \\|$\\)\\|^[\"]\"[#'()]")
 
-
 (cond (window-system
        (setq custom-background-mode 'light)
        (defface my-group-face-1
-	 '((t (:foreground "Red" :bold t))) "First group face")
+         '((t (:foreground "Red" :bold t))) "First group face")
        (defface my-group-face-2
-	 '((t (:foreground "DarkSeaGreen4" :bold t)))
-	 "Second group face")
+         '((t (:foreground "DarkSeaGreen4" :bold t)))
+         "Second group face")
        (defface my-group-face-3
-	 '((t (:foreground "Green4" :bold t))) "Third group face")
+         '((t (:foreground "Green4" :bold t))) "Third group face")
        (defface my-group-face-4
-	 '((t (:foreground "Gray" :bold t))) "Fourth group face")
+         '((t (:foreground "Gray" :bold t))) "Fourth group face")
        (defface my-group-face-5
-	 '((t (:foreground "LightBlue" :bold t))) "Fifth group face")))
+         '((t (:foreground "LightBlue" :bold t))) "Fifth group face")))
 
 (setq gnus-group-highlight
       '(((> unread 200) . my-group-face-1)
-	((and (< level 3) (zerop unread)) . my-group-face-2)
-	((< level 3) . my-group-face-3)
-	((zerop unread) . my-group-face-4)
-	(t . my-group-face-5)))
+        ((and (< level 3) (zerop unread)) . my-group-face-2)
+        ((< level 3) . my-group-face-3)
+        ((zerop unread) . my-group-face-4)
+        (t . my-group-face-5)))
 
 ;;2.18.3 Group Timestamp
 (add-hook 'gnus-select-group-hook 'gnus-group-set-timestamp)
@@ -55,7 +54,7 @@
 ;;3.10 Sorting the Summary Buffer
 (setq gnus-thread-sort-functions
       '((not gnus-thread-sort-by-number)
-	gnus-thread-sort-by-score))
+        gnus-thread-sort-by-score))
 
 ;;3.11 Asynchronous Article Fetching
 (setq gnus-asynchronous t)
@@ -64,7 +63,7 @@
   "Return non-nil for short, unread articles."
   (and (gnus-data-unread-p data)
        (< (mail-header-lines (gnus-data-header data))
-	  100)))
+          100)))
 (setq gnus-async-prefetch-article-p 'my-async-short-unread-p)
 
 ;;3.13 Persistent Articles

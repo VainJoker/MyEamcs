@@ -19,23 +19,22 @@
   :hook (window-setup . doom-modeline-mode)
   :config
   (use-package nyan-mode
-    :after doom-modeline
-    :init
-    (nyan-mode 1)
+    :hook (doom-modeline-mode . nyan-mode)
     :config
+    (nyan-mode 1)
     (setq nyan-animate-nyancat t)
-    (setq nyan-wavy-trail nil)
+    (setq nyan-wavy-trail t)
     ;; (setq mode-line-format
     ;;   (list
     ;;    '(:eval (list (nyan-create)))
     ;;    ))
     )
+  ; (setq display-battery-mode t)
   (setq doom-modeline-icon (display-graphic-p))
   (setq doom-modeline-height 40)
   (setq doom-modeline-bar-width 3)
   (setq doom-modeline-major-mode-icon t)
   (setq doom-modeline-major-mode-color-icon t)
-
   (setq doom-modeline-buffer-state-icon t)
   (setq doom-modeline-buffer-modification-icon t)
   (setq doom-modeline-modal-icon t)

@@ -143,7 +143,6 @@
     (save-buffer)
     )
   )
-
 (add-hook 'web-mode-hook '(lambda() (local-set-key (kbd "C-c C-p") 'web-refreash)))
 (add-hook 'web-mode-hook '(lambda() (local-set-key (kbd "C-c C-z") 'web-open)))
 

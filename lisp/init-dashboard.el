@@ -4,42 +4,6 @@
               all-the-icons-material
               winner-undo
               widget-forward)
-  ;; :custom-face (dashboard-heading ((t (:inherit (font-lock-string-face bold)))))
-  ;; :pretty-hydra
-  ;; ((:title (pretty-hydra-title "Dashboard" 'material "dashboard" :height 1.1 :v-adjust -0.225)
-  ;;          :color pink :quit-key "q")
-  ;;  ("Navigator"
-  ;;   (("U" update-config-and-packages "update" :exit t)
-  ;;    ("H" browse-homepage "homepage" :exit t)
-  ;;    ("R" restore-previous-session "recover session" :exit t)
-  ;;    ("L" restore-session "list sessions" :exit t)
-  ;;    ("S" open-custom-file "settings" :exit t))
-  ;;   "Section"
-  ;;   (("}" dashboard-next-section "next")
-  ;;    ("{" dashboard-previous-section "previous")
-  ;;    ("r" dashboard-goto-recent-files "recent files")
-  ;;    ("m" dashboard-goto-bookmarks "bookmarks")
-  ;;    ("p" dashboard-goto-projects "projects"))
-  ;;   "Item"
-  ;;   (("RET" widget-button-press "open" :exit t)
-  ;;    ("<tab>" widget-forward "next")
-  ;;    ("C-i" widget-forward "next")
-  ;;    ("<backtab>" widget-backward "previous")
-  ;;    ("C-n" next-line "next line")
-  ;;    ("C-p" previous-line "previous  line"))
-  ;;   "Misc"
-  ;;   (("<f2>" open-dashboard "open" :exit t)
-  ;;    ("g" dashboard-refresh-buffer "refresh" :exit t)
-  ;;    ("Q" quit-dashboard "quit" :exit t))))
-  :bind (:map dashboard-mode-map
-              ("H" . browse-homepage)
-              ("R" . restore-previous-session)
-              ("L" . restore-session)
-              ("S" . open-custom-file)
-              ("U" . update-config-and-packages)
-              ("q" . quit-dashboard)
-              ("h" . dashboard-hydra/body)
-              ("?" . dashboard-hydra/body))
   :hook (dashboard-mode . (lambda () (setq-local frame-title-format "")))
   :init
   (setq dashboard-banner-logo-title "Happy Hacking, VainJoker!"
@@ -51,7 +15,7 @@
                           (bookmarks . 5)
                           (projects . 5)
                           (registers . 5)
-        )
+                          )
         dashboard-set-init-info t
         dashboard-set-heading-icons t
         dashboard-set-file-icons t
@@ -92,6 +56,53 @@
            ))))
 (dashboard-setup-startup-hook)
 :config
+(with-eval-after-load 'evil
+  (evil-define-key 'normal dashboard-mode-map
+    "g" 'dashboard-refresh-buffer
+    "}" 'dashboard-next-section
+    "{" 'dashboard-previous-section
+    "p" 'dashboard-goto-projects
+    "r" 'dashboard-goto-recent-files
+    "H" 'browse-homepage
+    "R" 'restore-session)
+  )
+
+;; :bind (:map dashboard-mode-map
+;;             ("H" . browse-homepage)
+;;             ("R" . restore-previous-session)
+;;             ("L" . restore-session)
+;;             ("S" . open-custom-file)
+;;             ("U" . update-config-and-packages)
+;;             ("q" . quit-dashboard)
+;;             ("h" . dashboard-hydra/body)
+;;             ("?" . dashboard-hydra/body))
+;; :custom-face (dashboard-heading ((t (:inherit (font-lock-string-face bold)))))
+;; :pretty-hydra
+;; ((:title (pretty-hydra-title "Dashboard" 'material "dashboard" :height 1.1 :v-adjust -0.225)
+;;          :color pink :quit-key "q")
+;;  ("Navigator"
+;;   (("U" update-config-and-packages "update" :exit t)
+;;    ("H" browse-homepage "homepage" :exit t)
+;;    ("R" restore-previous-session "recover session" :exit t)
+;;    ("L" restore-session "list sessions" :exit t)
+;;    ("S" open-custom-file "settings" :exit t))
+;;   "Section"
+;;   (("}" dashboard-next-section "next")
+;;    ("{" dashboard-previous-section "previous")
+;;    ("r" dashboard-goto-recent-files "recent files")
+;;    ("m" dashboard-goto-bookmarks "bookmarks")
+;;    ("p" dashboard-goto-projects "projects"))
+;;   "Item"
+;;   (("RET" widget-button-press "open" :exit t)
+;;    ("<tab>" widget-forward "next")
+;;    ("C-i" widget-forward "next")
+;;    ("<backtab>" widget-backward "previous")
+;;    ("C-n" next-line "next line")
+;;    ("C-p" previous-line "previous  line"))
+;;   "Misc"
+;;   (("<f2>" open-dashboard "open" :exit t)
+;;    ("g" dashboard-refresh-buffer "refresh" :exit t)
+;;    ("Q" quit-dashboard "quit" :exit t))))
 (defun my-banner-path (&rest _)
   "Return the full path to banner."
   (expand-file-name "banner.txt" user-emacs-directory))
@@ -196,7 +207,8 @@
   (when (and dashboard-recover-layout-p
              (bound-and-true-p winner-mode))
     (winner-undo)
-    (setq dashboard-recover-layout-p nil)))
+    (setq dashboard-recover-layout-p nil))
+  )
 
 
 (provide 'init-dashboard)

@@ -4,6 +4,20 @@
 ;; (cnfonts-set-spacemacs-fallback-fonts)
   ;; )
 
+(use-package english-teacher
+  :demand t
+  :defer 2
+  :load-path "~/.emacs.d/site-lisp/english-teacher.el" ;; NOTE: here type english teacher directory
+  :hook ((Info-mode
+          elfeed-show-mode
+          eww-mode
+          Man-mode
+          Woman-Mode) . english-teacher-follow-mode)
+  :custom
+  (english-teacher-backend 'baidu)
+  (english-teacher-show-result-function 'english-teacher-eldoc-show-result-function)
+  )
+
 
 (use-package sis
   :after evil

@@ -2,10 +2,7 @@
   :diminish ivy-mode counsel-mode
   :bind (("C-s"   . swiper-isearch)
          ("C-r"   . swiper-isearch-backward)
-         ("s-f"   . swiper)
-         ("C-S-s" . swiper-all)
 
-         ("C-c C-r" . ivy-resume)
          ("C-c v p" . ivy-push-view)
          ("C-c v o" . ivy-pop-view)
          ("C-c v ." . ivy-switch-view)
@@ -17,23 +14,6 @@
          ([remap set-variable] . counsel-set-variable)
          ([remap insert-char] . counsel-unicode-char)
          ([remap recentf-open-files] . counsel-recentf)
-
-         ("C-x j"   . counsel-mark-ring)
-         ("C-h F"   . counsel-faces)
-
-         ("C-c B" . counsel-bookmarked-directory)
-         ("C-c L" . counsel-load-library)
-         ("C-c O" . counsel-find-file-extern)
-         ("C-c P" . counsel-package)
-         ("C-c R" . counsel-list-processes)
-         ("C-c f" . counsel-find-library)
-         ("C-c g" . counsel-grep)
-         ("C-c h" . counsel-command-history)
-         ("C-c i" . counsel-git)
-         ("C-c j" . counsel-git-grep)
-         ("C-c o" . counsel-outline)
-         ("C-c r" . counsel-rg)
-         ("C-c z" . counsel-fzf)
 
          ("C-c c B" . counsel-bookmarked-directory)
          ("C-c c F" . counsel-faces)
@@ -63,9 +43,6 @@
          :map ivy-minibuffer-map
          ("C-w" . ivy-yank-word)
          ("C-`" . ivy-avy)
-
-         :map counsel-find-file-map
-         ("C-h" . counsel-up-directory)
 
          :map swiper-map
          ("M-s" . swiper-isearch-toggle)
@@ -378,6 +355,11 @@ This is for use in `ivy-re-builders-alist'."
 
     (ivy-prescient-mode 1))
 
+  ;; Additional key bindings for Ivy
+  ;; (use-package ivy-hydra
+  ;;   :commands ivy-hydra-read-action
+  ;;   :init (setq ivy-read-action-function #'ivy-hydra-read-action))
+
   ;; Ivy integration for Projectile
   (use-package counsel-projectile
     :hook (counsel-mode . counsel-projectile-mode)
@@ -385,7 +367,7 @@ This is for use in `ivy-re-builders-alist'."
 
   ;; Integrate yasnippet
   (use-package ivy-yasnippet
-    :bind ("C-c C-y" . ivy-yasnippet))
+    )
 
   ;; Select from xref candidates with Ivy
   (use-package ivy-xref
@@ -395,7 +377,7 @@ This is for use in `ivy-re-builders-alist'."
     (setq xref-show-xrefs-function #'ivy-xref-show-xrefs))
 
   ;; Quick launch apps
-  (bind-key "s-<f6>" #'counsel-linux-app counsel-mode-map)
+    (bind-key "<f12>" #'counsel-linux-app counsel-mode-map)
 
   ;; Display world clock using Ivy
   (use-package counsel-world-clock
@@ -459,10 +441,6 @@ This is for use in `ivy-re-builders-alist'."
 (use-package ivy-posframe
   :init
   (ivy-posframe-mode 1)
-  ;; :custom-face
-  ;; (ivy-posframe ((t (:background "#627d87"))))
-  ;; (ivy-posframe-border ((t (:background "#6272a4"))))
-  ;; (ivy-posframe-cursor ((t (:background "#61bfff"))))
   :custom (ivy-posframe-parameters '((left-fringe . 8)
                                      (right-fringe . 8)))
   (ivy-posframe-width 130)
@@ -490,119 +468,3 @@ This is for use in `ivy-re-builders-alist'."
   )
 
 (provide 'init-ivy)
-
-
-
-
-;; (use-package counsel
-;;   :diminish ivy-mode counsel-mode
-;;   :defines
-;;   (projectile-completion-system magit-completing-read-function)
-;;   :bind
-;;   (("C-s" . swiper)
-;;    ("M-s r" . ivy-resume)
-;;    ("C-c v p" . ivy-push-view)
-;;    ("C-c v o" . ivy-pop-view)
-;;    ("C-c v ." . ivy-switch-view)
-;;    ("M-s c" . counsel-ag)
-;;    ("M-o f" . counsel-fzf)
-;;    ("M-o r" . counsel-recentf)
-;;    ("M-y" . counsel-yank-pop)
-;;    :map ivy-minibuffer-map
-;;    ("C-w" . ivy-backward-kill-word)
-;;    ("C-k" . ivy-kill-line)
-;;    ("C-j" . ivy-immediate-done)
-;;    ("RET" . ivy-alt-done)
-;;    ("C-h" . ivy-backward-delete-char))
-;;   :preface
-;;   (defun ivy-format-function-pretty (cands)
-;;     "Transform CANDS into a string for minibuffer."
-;;     (ivy--format-function-generic
-;;      (lambda (str)
-;;        (concat
-;; 	(all-the-icons-faicon "hand-o-right" :height .85 :v-adjust .05 :face 'font-lock-constant-face)
-;; 	(ivy--add-face str 'ivy-current-match)))
-;;      (lambda (str)
-;;        (concat "  " str))
-;;      cands
-;;      "\n"))
-;;   :hook
-;;   (after-init . ivy-mode)
-;;   (ivy-mode . counsel-mode)
-;;   :custom
-;;   (counsel-yank-pop-height 15)
-;;   (enable-recursive-minibuffers t)
-;;   (ivy-use-selectable-prompt t)
-;;   (ivy-use-virtual-buffers t)
-;;   (ivy-on-del-error-function nil)
-;;   (swiper-action-recenter t)
-;;   (counsel-grep-base-command "ag -S --noheading --nocolor --nofilename --numbers '%s' %s")
-;;   :config
-;;   ;; using ivy-format-fuction-arrow with counsel-yank-pop
-;;   (advice-add
-;;    'counsel--yank-pop-format-function
-;;    :override
-;;    (lambda (cand-pairs)
-;;      (ivy--format-function-generic
-;;       (lambda (str)
-;; 	(mapconcat
-;; 	 (lambda (s)
-;; 	   (ivy--add-face (concat (propertize "┃ " 'face `(:foreground "#61bfff")) s) 'ivy-current-match))
-;; 	 (split-string
-;; 	  (counsel--yank-pop-truncate str) "\n" t)
-;; 	 "\n"))
-;;       (lambda (str)
-;; 	(counsel--yank-pop-truncate str))
-;;       cand-pairs
-;;       counsel-yank-pop-separator)))
-
-;;   ;; NOTE: this variable do not work if defined in :custom
-;;   (setq ivy-format-function 'ivy-format-function-pretty)
-;;   (setq counsel-yank-pop-separator
-;; 	(propertize "\n────────────────────────────────────────────────────────\n"
-;; 		    'face `(:foreground "#6272a4")))
-
-;;   ;; Integration with `projectile'
-;;   (with-eval-after-load 'projectile
-;;     (setq projectile-completion-system 'ivy))
-;;   ;; Integration with `magit'
-;;   (with-eval-after-load 'magit
-;;     (setq magit-completing-read-function 'ivy-completing-read))
-
-;;   ;; Enhance fuzzy matching
-;;   (use-package flx
-;;     )
-;;   ;; Enhance M-x
-;;   (use-package amx
-;;     :init (amx-mode 1)
-;;     )
-;;   ;; Ivy integration for Projectile
-;;   (use-package counsel-projectile
-;;     :config (counsel-projectile-mode 1)
-;;     )
-;;   (use-package counsel-etags
-;;     :bind (("C-]" . counsel-etags-find-tag-at-point))
-;;     :init
-;;     (add-hook 'prog-mode-hook
-;; 	      (lambda ()
-;; 		(add-hook 'after-save-hook
-;; 			  'counsel-etags-virtual-update-tags 'append 'local)))
-;;     :config
-;;     (setq counsel-etags-update-interval 60)
-;;     (push "build" counsel-etags-ignore-directories)
-;;     )
-;;   ;; Show ivy frame using posframe
-;;   (use-package ivy-posframe
-;;     :demand t
-;;     :config
-;;     (ivy-posframe-mode 1)
-;;     :custom (ivy-posframe-parameters '((left-fringe . 8)
-;; 				       (right-fringe . 8)))
-;;     (ivy-posframe-width 130)
-;;     (ivy-posframe-height 11)
-;;     (ivy-posframe-display-functions-alist '((t . ivy-posframe-display-at-frame-center)))
-;;     )
-;;   )
-
-
-;; (provide 'init-ivy)

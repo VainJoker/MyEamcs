@@ -1,6 +1,6 @@
 (use-package lsp-mode
-  :defines (lsp-clients-python-library-directories
-            lsp-rust-server)
+  ;; :defines (lsp-clients-python-library-directories
+            ;; lsp-rust-server)
   :commands (lsp-enable-which-key-integration
              lsp-format-buffer
              lsp-organize-imports
@@ -24,7 +24,7 @@
   :init
   ;; @see https://emacs-lsp.github.io/lsp-mode/page/performance
   (setq read-process-output-max (* 1024 1024)) ;; 1MB
-
+  (setq lsp-auto-guess-root t)
   (setq lsp-keymap-prefix "C-c L"
         lsp-keep-workspace-alive nil
         lsp-signature-auto-activate nil
@@ -41,9 +41,10 @@
         lsp-enable-on-type-formatting nil)
 
   ;; For `lsp-clients'
-  (setq lsp-clients-python-library-directories '("/usr/local/" "/usr/"))
-  (when (executable-find "rust-analyzer")
-    (setq lsp-rust-server 'rust-analyzer))
+  ;; (setq lsp-clients-python-library-directories '("/usr/local/" "/usr/"))
+  ;; (when (executable-find "rust-analyzer")
+  ;;   (setq lsp-rust-server 'rust-analyzer))
+  (setq lsp-rust-server 'rls)
   :config
   (with-no-warnings
     (defun my-lsp--init-if-visible (func &rest args)
@@ -61,11 +62,21 @@
 (use-package lsp-ui
   :custom-face
   (lsp-ui-sideline-code-action ((t (:inherit warning))))
-  :bind (("C-c u" . lsp-ui-imenu)
+  :bind (
+         ("<f9>" . lsp-ui-imenu-toggle)
          :map lsp-ui-mode-map
-         ("M-RET" . lsp-ui-sideline-apply-code-actions))
+         ("M-RET" . lsp-ui-sideline-apply-code-actions)
+         )
   :hook (lsp-mode . lsp-ui-mode)
-  :init (setq lsp-ui-sideline-show-diagnostics nil
+  :init
+  (defun lsp-ui-imenu-toggle()
+    (interactive)
+    (if (get-buffer "*lsp-ui-imenu*")
+        (kill-buffer "*lsp-ui-imenu*")
+      (lsp-ui-imenu)
+      )
+    )
+  (setq lsp-ui-sideline-show-diagnostics nil
               lsp-ui-sideline-ignore-duplicate t
               lsp-ui-doc-position 'at-point
               lsp-ui-doc-border (face-foreground 'font-lock-comment-face)
@@ -95,19 +106,20 @@
   :defines dap-python-executable
   :diminish
   :bind (:map lsp-mode-map
-              ("<f5>" . dap-debug)
+              ("<f6>" . dap-debug)
               )
-  :hook ((after-init . dap-mode)
+  :hook
+  (
+         (after-init . dap-mode)
          (dap-mode . dap-ui-mode)
          )
-
          (python-mode . (lambda () (require 'dap-python)))
          (ruby-mode . (lambda () (require 'dap-ruby)))
          (go-mode . (lambda () (require 'dap-go)))
          (java-mode . (lambda () (require 'dap-java)))
          ((c-mode c++-mode objc-mode swift-mode) . (lambda () (require 'dap-lldb)))
          (php-mode . (lambda () (require 'dap-php)))
-         (elixir-mode . (lambda () (require 'dap-elixir)))
+         ;; (elixir-mode . (lambda () (require 'dap-elixir)))
          ((js-mode js2-mode) . (lambda () (require 'dap-chrome)))
          (powershell-mode . (lambda () (require 'dap-pwsh))))
   :init

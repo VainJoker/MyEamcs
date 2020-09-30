@@ -10,9 +10,9 @@
               describe-function-1@advice-remove-button
               helpful-update@advice-remove-button)
   :bind (:map emacs-lisp-mode-map
-         ("C-c C-x" . ielm)
          ("C-c C-c" . eval-defun)
-         ("C-c C-b" . eval-buffer))
+         ("C-c C-b" . eval-buffer)
+         )
   :hook (emacs-lisp-mode . (lambda ()
                              "Disable the checkdoc checker."
                              (setq-local flycheck-disabled-checkers
@@ -257,4 +257,3 @@ Lisp function does not specify a special indentation."
   :hook (emacs-lisp-mode . overseer-mode))
 
 (provide 'init-elisp)
-

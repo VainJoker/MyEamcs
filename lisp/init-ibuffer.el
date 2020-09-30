@@ -19,6 +19,4 @@
                                      default-directory))))
           (counsel-find-file default-directory)))
       (advice-add #'ibuffer-find-file :override #'my-ibuffer-find-file))))
-
-
 (provide 'init-ibuffer)
