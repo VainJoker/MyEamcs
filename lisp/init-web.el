@@ -8,7 +8,6 @@
 
 
 (use-package typescript-mode
-  :defer 2
   :ensure t
   :mode "\\.ts\\'"
   :commands (typescript-mode)
@@ -75,7 +74,6 @@
 ;;   )
 
 (use-package css-mode
-  :defer 2
   :ensure t
   :mode "\\.css\\'"
   :config
@@ -88,7 +86,6 @@
   )
 
 (use-package scss-mode
-  :defer 2
   :ensure t
   :mode "\\.scss\\'"
   )

@@ -1,6 +1,13 @@
 ;; Personal information
 (setq user-full-name "VainJoker"
       user-mail-address "vainjoker@163.com")
+(setq split-height-threshold nil)
+(setq split-width-threshold 0)
+
+(use-package server
+  :ensure nil
+  :hook (after-init . server-mode)
+  )
 
 ;; linenumber
 (use-package display-line-numbers

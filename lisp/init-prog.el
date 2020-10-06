@@ -57,10 +57,4 @@
 (unless (fboundp 'conf-toml-mode)
   (use-package toml-mode))
 
-;; Batch Mode eXtras
-(use-package bmx-mode
-  :after company
-  :diminish
-  :hook (after-init . bmx-mode-setup-defaults))
-
 (provide 'init-prog)

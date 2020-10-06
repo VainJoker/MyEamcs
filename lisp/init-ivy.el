@@ -2,7 +2,6 @@
   :diminish ivy-mode counsel-mode
   :bind (("C-s"   . swiper-isearch)
          ("C-r"   . swiper-isearch-backward)
-
          ("C-c v p" . ivy-push-view)
          ("C-c v o" . ivy-pop-view)
          ("C-c v ." . ivy-switch-view)
@@ -73,6 +72,7 @@
     (setq counsel-grep-base-command "rg -S --no-heading --line-number --color never %s %s")
     )
   :config
+
   (with-no-warnings
     ;; Display an arrow with the selected item
     (defun my-ivy-format-function-arrow (cands)
@@ -348,10 +348,10 @@ This is for use in `ivy-re-builders-alist'."
             (t . ivy-prescient-re-builder))
           ivy-prescient-sort-commands
           '(:not swiper swiper-isearch ivy-switch-buffer
-            lsp-ivy-workspace-symbol ivy-resume ivy--restore-session
-            counsel-grep counsel-git-grep counsel-rg counsel-ag
-            counsel-ack counsel-fzf counsel-pt counsel-imenu
-            counsel-yank-pop counsel-recentf counsel-buffer-or-recentf))
+                 lsp-ivy-workspace-symbol ivy-resume ivy--restore-session
+                 counsel-grep counsel-git-grep counsel-rg counsel-ag
+                 counsel-ack counsel-fzf counsel-pt counsel-imenu
+                 counsel-yank-pop counsel-recentf counsel-buffer-or-recentf))
 
     (ivy-prescient-mode 1))
 
@@ -377,17 +377,17 @@ This is for use in `ivy-re-builders-alist'."
     (setq xref-show-xrefs-function #'ivy-xref-show-xrefs))
 
   ;; Quick launch apps
-    (bind-key "<f12>" #'counsel-linux-app counsel-mode-map)
+  (bind-key "<f12>" #'counsel-linux-app counsel-mode-map)
 
   ;; Display world clock using Ivy
   (use-package counsel-world-clock
     :bind (:map counsel-mode-map
-           ("C-c c k" . counsel-world-clock)))
+                ("C-c c k" . counsel-world-clock)))
 
   ;; Tramp ivy interface
   (use-package counsel-tramp
     :bind (:map counsel-mode-map
-           ("C-c c T" . counsel-tramp)))
+                ("C-c c T" . counsel-tramp)))
 
   ;; Support pinyin in Ivy
   ;; Input prefix ':' to match pinyin
@@ -437,34 +437,34 @@ This is for use in `ivy-re-builders-alist'."
                                  ivy--regex-plus))
              (setf (alist-get key ivy-re-builders-alist)
                    #'ivy--regex-pinyin))))
-       ivy-re-builders-alist))))
-(use-package ivy-posframe
-  :init
-  (ivy-posframe-mode 1)
-  :custom (ivy-posframe-parameters '((left-fringe . 8)
-                                     (right-fringe . 8)))
-  (ivy-posframe-width 130)
-  (ivy-posframe-height 11)
-  (ivy-posframe-display-functions-alist '((t . ivy-posframe-display-at-frame-center))))
-
-(when (display-graphic-p)
-  ;; Better experience with icons
-  ;; Enable it before`ivy-rich-mode' for better performance
-  (use-package all-the-icons-ivy-rich
-    :hook (ivy-mode . all-the-icons-ivy-rich-mode)
-    )
-
-  ;; More friendly display transformer for Ivy
-  (use-package ivy-rich
-    :hook (;; Must load after `counsel-projectile'
-           (counsel-projectile-mode . ivy-rich-mode)
-           (ivy-rich-mode . (lambda ()
-                              "Use abbreviate in `ivy-rich-mode'."
-                              (setq ivy-virtual-abbreviate
-                                    (or (and ivy-rich-mode 'abbreviate) 'name)))))
+       ivy-re-builders-alist)))
+  (use-package ivy-posframe
     :init
-    ;; For better performance
-    (setq ivy-rich-parse-remote-buffer nil))
+    (ivy-posframe-mode 1)
+    :custom (ivy-posframe-parameters '((left-fringe . 8)
+                                       (right-fringe . 8)))
+    (ivy-posframe-width 130)
+    (ivy-posframe-height 11)
+    (ivy-posframe-display-functions-alist '((t . ivy-posframe-display-at-frame-center))))
+  (when (display-graphic-p)
+    ;; Better experience with icons
+    ;; Enable it before`ivy-rich-mode' for better performance
+    (use-package all-the-icons-ivy-rich
+      :hook (ivy-mode . all-the-icons-ivy-rich-mode)
+      )
+
+    ;; More friendly display transformer for Ivy
+    (use-package ivy-rich
+      :hook (;; Must load after `counsel-projectile'
+             (counsel-projectile-mode . ivy-rich-mode)
+             (ivy-rich-mode . (lambda ()
+                                "Use abbreviate in `ivy-rich-mode'."
+                                (setq ivy-virtual-abbreviate
+                                      (or (and ivy-rich-mode 'abbreviate) 'name)))))
+      :init
+      ;; For better performance
+      (setq ivy-rich-parse-remote-buffer nil))
+    )
   )
 
 (provide 'init-ivy)

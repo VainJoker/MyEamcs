@@ -4,14 +4,13 @@
   (add-to-list 'exec-path "~/go/bin")
   ;; :functions (go-packages-gopkgs go-update-tools)
   :bind (:map go-mode-map
-         ("C-c R" . go-remove-unused-imports)
+         ("C-c r" . go-remove-unused-imports)
          ("<f1>" . godoc-at-point))
   ;; :hook ((before-save . gofmt-before-save))
   :config
   ;; Env vars
   (with-eval-after-load 'exec-path-from-shell
     (exec-path-from-shell-copy-envs '("GOPATH" "GO111MODULE" "GOPROXY")))
-
   ;; Misc
   (use-package go-dlv)
   (use-package go-fill-struct)
@@ -47,7 +46,7 @@
            ("C-c t a" . go-test-current-project)
            ("C-c t m" . go-test-current-file)
            ("C-c t ." . go-test-current-test)
-           ("C-c t x" . go-run))))
+           ("C-c C-r" . go-run))))
 
 ;; Local Golang playground for short snippets
 (use-package go-playground
@@ -99,5 +98,6 @@
   ;; ;; Try to install go tools if `gopls' is not found
   ;; (unless (executable-find "gopls")
   ;;   (go-update-tools))
+
 
 

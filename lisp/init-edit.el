@@ -6,9 +6,7 @@
 
 ;; Click to browse URL or to send to e-mail address
 (use-package goto-addr
-  :ensure nil
-  :hook ((text-mode . goto-address-mode)
-         (prog-mode . goto-address-prog-mode)))
+  :ensure nil)
 
 ;; Jump to things in Emacs tree-style
 (use-package avy
@@ -148,7 +146,8 @@
 ;; Narrow/Widen
 (use-package fancy-narrow
   :diminish
-  :hook (after-init . fancy-narrow-mode))
+  :hook (after-init . fancy-narrow-mode)
+  )
 
 
 

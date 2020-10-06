@@ -41,10 +41,8 @@
         lsp-enable-on-type-formatting nil)
 
   ;; For `lsp-clients'
-  ;; (setq lsp-clients-python-library-directories '("/usr/local/" "/usr/"))
-  ;; (when (executable-find "rust-analyzer")
-  ;;   (setq lsp-rust-server 'rust-analyzer))
-  (setq lsp-rust-server 'rls)
+  (setq lsp-clients-python-library-directories '("/usr/local/" "/usr/"))
+  (setq lsp-rust-server 'rust-analyzer)
   :config
   (with-no-warnings
     (defun my-lsp--init-if-visible (func &rest args)
@@ -153,105 +151,3 @@
 
 (provide 'init-lsp)
 
-                                        ; (use-package lsp-mode
-                                        ;   :ensure t
-                                        ;   :defer 2
-                                        ;   :custom
-                                        ;   (lsp-prefer-capf t)
-                                        ;   :init
-                                        ;   (let ((lsp-keymap-prefix "nil")))
-                                        ;   (let ((lsp-keymap-prefix "SPC l")))
-                                        ;   ;; (lsp-log-io t)
-                                        ;   :hook
-                                        ;   (auctex . lsp)
-                                        ;   (go-mode . lsp)
-                                        ;   (c-mode . lsp)
-                                        ;   (lisp-mode .lsp)
-                                        ;   (emacs-lisp-mode .lsp)
-                                        ;   (js2-mode-hook .lsp)
-                                        ;   (js-mode . lsp)
-                                        ;   (rust-mode .lsp)
-                                        ;   (web-mode . lsp)
-                                        ;   (mhtml-mode . lsp)
-                                        ;   (vue-mode . lsp)
-                                        ;   (lua-mode . lsp)
-                                        ;   ;; (lsp . company-capf)
-                                        ;   ;; (python-mode . lsp)
-                                        ;   ;; if you want which-key integration
-                                        ;   (lsp-mode . lsp-enable-which-key-integration)
-                                        ;   ;; )
-                                        ;   :config
-                                        ;   (setq read-process-output-max (* 1024 1024)) ;; 1MB
-                                        ;   (advice-add #'lsp--auto-configure :override #'ignore)
-                                        ;   (setq lsp-auto-guess-root 0)
-                                        ;   (setq lsp-auto-configure 1)
-                                        ;   ;; (setq lsp-keep-workspace-alive nil
-                                        ;   ;; 	lsp-prefer-capf t
-                                        ;   ;; 	lsp-signature-auto-activate nil
-                                        ;   ;; 	lsp-eldoc-render-all nil
-                                        ;   ;; 	;; lsp-signature-doc-lines 2
-                                        ;   ;; 	lsp-modeline-code-actions-enable nil
-                                        ;   ;; 	lsp-enable-file-watchers nil
-                                        ;   ;; 	lsp-enable-file-watchers nil
-                                        ;   ;; 	lsp-enable-folding nil
-                                        ;   ;; 	lsp-enable-semantic-highlighting nil
-                                        ;   ;; 	lsp-enable-symbol-highlighting nil
-                                        ;   ;; 	lsp-enable-text-document-color nil
-                                        ;   ;; 	lsp-enable-indentation nil
-                                        ;   ;; 	lsp-enable-on-type-formatting nil)
-                                        ;   (use-package lsp-ui
-                                        ;     :ensure t
-                                        ;     :defer 2
-                                        ;     ;; :hook
-                                        ;     ;; ((lsp . lsp-ui-sideline-mode-hook)
-                                        ;     ;; (lsp . lsp-ui-doc-mode-hook)
-                                        ;     ;; (lsp . lsp-ui-imenu-mode-hook)
-                                        ;     ;; (lsp . lsp-ui-peek-mode-hook)
-                                        ;     ;; )
-                                        ;     :config
-                                        ;     (setq lsp-ui-doc-mode nil)
-                                        ;     :custom
-                                        ;     (lsp-ui-doc-delay 3)
-                                        ;     ;; (lsp-ui-doc-mode 0)
-                                        ;     )
-                                        ;   (use-package dap-mode
-                                        ;     :ensure t
-                                        ;     :defer 2
-                                        ;     :config
-                                        ;     (setq dap-auto-configure-features '(sessions locals controls tooltip))
-                                        ;     (require 'dap-go)
-                                        ;     )
-                                        ;   )
-                                        ;
-                                        ; (use-package eglot
-                                        ;   :ensure t
-                                        ;   :defer 2
-                                        ;   :config
-                                        ;   ;; (add-hook 'js2-mode-hook 'eglot-ensure)
-                                        ;   (add-hook 'python-mode-hook 'eglot-ensure)
-                                        ;   ;; (add-hook 'lua-mode-hook 'eglot-ensure)
-                                        ;   ;; (add-hook 'rust-mode-hook 'eglot-ensure)
-                                        ;   )
-                                        ;
-                                        ;
-                                        ;   ;; (use-package nox
-                                        ;   ;;   :defer 2
-                                        ;   ;;   :load-path "~/.emacs.d/site-lisp/nox"
-                                        ;   ;;   :config
-                                        ;   ;;   (dolist (hook (list
-                                        ;   ;; 		 'js-mode-hook
-                                        ;   ;; 		 'rust-mode-hook
-                                        ;   ;; 		 'python-mode-hook
-                                        ;   ;; 		 'ruby-mode-hook
-                                        ;   ;; 		 'java-mode-hook
-                                        ;   ;; 		 'sh-mode-hook
-                                        ;   ;; 		 'php-mode-hook
-                                        ;   ;; 		 'c-mode-common-hook
-                                        ;   ;; 		 'go-mode-hook
-                                        ;   ;; 		 'c-mode-hook
-                                        ;   ;; 		 'c++-mode-hook
-                                        ;   ;; 		 'haskell-mode-hook
-                                        ;   ;; 		 'lisp-mode-hook
-                                        ;   ;; 		 ))
-                                        ;   ;;     (add-hook hook '(lambda () (nox-ensure))))
-                                        ;   ;;   )

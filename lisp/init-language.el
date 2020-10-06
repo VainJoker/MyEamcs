@@ -7,7 +7,7 @@
 (use-package english-teacher
   :demand t
   :defer 2
-  :load-path "~/.emacs.d/site-lisp/english-teacher.el" ;; NOTE: here type english teacher directory
+  :load-path "~/.emacs.d/site-lisp/english-teacher" ;; NOTE: here type english teacher directory
   :hook ((Info-mode
           elfeed-show-mode
           eww-mode
@@ -21,7 +21,6 @@
 
 (use-package sis
   :after evil
-  :defer 1
   :hook
   (((text-mode prog-mode) . sis-follow-context-mode)
    ((text-mode prog-mode) . sis-inline-mode))

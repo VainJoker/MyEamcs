@@ -11,6 +11,8 @@
                    all-the-icons
                    doom-modeline
                    display-line-numbers
+                   hl-line
+                   centaur-tabs
                    which-key
                    dashboard
                    diminish
@@ -33,7 +35,6 @@
                    flycheck
                    flyspell
                    imenu
-                   fancy-narrow
                    general
                    projectile
                    recentf

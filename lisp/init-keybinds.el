@@ -69,6 +69,7 @@
     "tt" 'youdao-dictionary-search-at-point-posframe
     "ti" 'youdao-dictionary-search-from-input
     "tv" 'youdao-dictionary-play-voice-at-point
+    "xx" 'kill-current-buffer
     ;; "gb" 'magit-blame-mode
     ;; "gl" 'magit-file-log
     ;; "gr" 'magit-grep

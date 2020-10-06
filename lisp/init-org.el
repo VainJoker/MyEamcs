@@ -52,23 +52,23 @@
   (add-to-list 'org-capture-templates
                '("h" "Homework" entry
                  (file+headline "~/org/gtd/homework.org" "Homework")
-                 "* TODO [#B] %^{heading}\n%u\n ?\n" :clock-in t :clock-resume t))
+                 "* TODO [#B] %^{heading}\n%u\n %^{detail}\n" :clock-in t :clock-resume t))
   (add-to-list 'org-capture-templates
                '("b" "Billing" plain
                  (file+function "~/org/gtd/billing.org" find-month-tree)
-                 " | %U | %^{类别} | %^{描述} | %^{金额} |" :kill-buffer t))
+                 " | %U | %^{category} | %^{describe} | %^{money} |" :kill-buffer t))
   (add-to-list 'org-capture-templates
                '("i" "Inbox" entry (file "~/org/gtd/inbox.org")
-                 "* %U - %^{heading} %^g\n %?\n"))
+                 "* %U - %^{heading} %^g\n %^{detail}\n"))
   (add-to-list 'org-capture-templates
                '("s" "Someday" entry (file "~/org/gtd/someday.org")
-                 "* %U - %^{heading} %^g\n %?\n"))
+                 "* %U - %^{heading} %^g\n %^{detail}\n"))
   (add-to-list 'org-capture-templates
                '("j" "Journal" entry (file "~/org/gtd/journal.org")
-                 "* %U - %^{heading} %^g\n %?\n"))
+                 "* %U - %^{heading} %^g\n %^{detail}\n"))
   (add-to-list 'org-capture-templates
                '("t" "Todo" entry (file "~/org/gtd/todo.org")
-                 "* TODO [#B] %U - %^{heading} %^g\n %?\n"))
+                 "* TODO [#B] %U - %^{heading} %^g\n %^{detail}\n"))
 
   (defun get-year-and-month ()
     (list (format-time-string "%Y年") (format-time-string "%m月")))
@@ -166,10 +166,8 @@
 
 
   (use-package ox-reveal
-    :after org
-    :defer 5
+    :hook (org-reveal . org-mode)
     :config
-    (reveal-mode 1)
     (setq org-reveal-root "https://cdn.jsdelivr.net/npm/reveal.js")
     )
 
@@ -185,8 +183,6 @@
     (setq org-superstar-configure-like-org-bullets 1)
     )
   (use-package org2ctex
-    ;; :hook
-    ;; (org-mode . org2ctex-mode)
     :after org
     :defer 5
     )
@@ -205,8 +201,13 @@
     )
 
   (use-package ox-pandoc
-    :after org
-    :defer 5
+    :demand t
+    :after ox
+    )
+
+  (use-package valign
+    :demand t
+    :load-path "~/.emacs.d/site-lisp/valign"
     )
 
   )

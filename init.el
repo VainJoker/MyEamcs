@@ -132,7 +132,6 @@
 (require 'init-prog)
 (require 'init-termshell)
 
-(require 'init-elisp)
 (require 'init-c)
 (require 'init-go)
 (require 'init-rust)
@@ -146,6 +145,7 @@
 
 (require 'init-edit)
 (require 'init-language)
+(require 'init-autoinsert)
 
 (add-hook 'emacs-startup-hook
           (lambda ()
